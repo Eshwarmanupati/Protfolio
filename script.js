@@ -8,18 +8,23 @@ const REDUCED = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 document.addEventListener('DOMContentLoaded', () => {
   initTheme();
   initLoader();
+  initPageTransitions();
   initCursor();
   initParticles();
   initNav();
   initScrollProgress();
   initHeroName();
+  initWordReveal();
   initTyped();
   renderProjects();
+  initStagger();
   initReveal();
   initCounters();
+  initMeters();
   initRings();
   initContribGrid();
   initTimelineProgress();
+  initParallax();
   initSpotlight();
   initTilt();
   initMagnetic();
@@ -62,9 +67,61 @@ function initTheme() {
 function initLoader() {
   const loader = document.getElementById('loader');
   if (!loader) return;
+
+  // The full loader is a first-impression thing: show it once per browser
+  // session, then let the page-transition curtain carry every later navigation.
+  let seen = false;
+  try { seen = sessionStorage.getItem('seen-loader') === '1'; } catch (e) { /* private mode */ }
+  if (seen || REDUCED) { loader.remove(); return; }
+  try { sessionStorage.setItem('seen-loader', '1'); } catch (e) { /* ignore */ }
+
   const hide = () => loader.classList.add('hidden');
-  window.addEventListener('load', () => setTimeout(hide, REDUCED ? 0 : 450));
+  window.addEventListener('load', () => setTimeout(hide, 450));
   setTimeout(hide, 2000); // hard fallback
+}
+
+
+/* ── PAGE TRANSITIONS ──────────────────────────────────── */
+function initPageTransitions() {
+  const main = document.querySelector('main');
+  if (main && !REDUCED) main.classList.add('page-enter');
+  if (REDUCED) return;
+
+  // The curtain ships in the markup so it is part of the first paint — the
+  // entry animation is pure CSS and still clears itself with JS disabled.
+  const fx = document.getElementById('page-fx');
+  if (!fx) return;
+  setTimeout(() => fx.classList.remove('in'), 1000);
+
+  const isInternal = (a) => {
+    if (!a || a.target === '_blank' || a.hasAttribute('download')) return false;
+    const href = a.getAttribute('href') || '';
+    if (!href || href.startsWith('#') || href.startsWith('mailto:') || href.startsWith('tel:')) return false;
+    try {
+      const url = new URL(a.href, location.href);
+      if (url.origin !== location.origin) return false;
+      if (url.pathname === location.pathname) return false;  // same page + hash
+      return /\.html?$/.test(url.pathname) || url.pathname.endsWith('/');
+    } catch (e) { return false; }
+  };
+
+  document.addEventListener('click', (e) => {
+    if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
+    const a = e.target.closest('a[href]');
+    if (!isInternal(a)) return;
+    e.preventDefault();
+    fx.classList.remove('in');
+    void fx.offsetWidth;          // restart the animation cleanly
+    fx.classList.add('out');
+    setTimeout(() => { location.href = a.href; }, 470);
+  });
+
+  // Coming back via the browser's back/forward cache: clear the curtain.
+  window.addEventListener('pageshow', (ev) => {
+    if (!ev.persisted) return;
+    fx.classList.remove('out', 'in');
+    if (main) { main.classList.remove('page-enter'); void main.offsetWidth; main.classList.add('page-enter'); }
+  });
 }
 
 
@@ -196,13 +253,23 @@ function initNav() {
 
   onScroll(() => navbar.classList.toggle('scrolled', window.scrollY > 24));
 
-  // scroll spy
+  // Mark the link for the page we are on (multi-page nav).
+  const file = (location.pathname.split('/').pop() || 'index.html').toLowerCase();
+  document.querySelectorAll('.nav-links a, .footer-col a').forEach(a => {
+    const href = (a.getAttribute('href') || '').split('#')[0].toLowerCase();
+    if (!href || href.startsWith('http') || href.startsWith('mailto') || href.startsWith('tel')) return;
+    if (href === file || (file === 'index.html' && href === './')) a.classList.add('current');
+  });
+
+  // In-page scroll spy — only meaningful for hash links (the home page).
+  const hashAnchors = anchors.filter(a => (a.getAttribute('href') || '').startsWith('#'));
+  if (!hashAnchors.length) return;
   const sections = [...document.querySelectorAll('section[id]')];
   onScroll(() => {
     const pos = window.scrollY + window.innerHeight * 0.3;
     let current = sections.length ? sections[0].id : '';
     for (const s of sections) if (s.offsetTop <= pos) current = s.id;
-    anchors.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + current));
+    hashAnchors.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + current));
   });
 }
 
@@ -243,6 +310,124 @@ function initHeroName() {
 }
 
 
+/* ── WORD-BY-WORD MASK REVEAL ──────────────────────────── */
+/* Wraps every word in an overflow-hidden line so it can slide up from
+   behind its own baseline. Gradient spans are kept whole — splitting them
+   would break background-clip: text. */
+function initWordReveal() {
+  const targets = document.querySelectorAll('[data-anim="words"]');
+  if (!targets.length) return;
+
+  if (REDUCED) { targets.forEach(el => el.classList.add('visible')); return; }
+
+  const makeLine = () => {
+    const line = document.createElement('span');
+    line.className = 'w-line';
+    const word = document.createElement('span');
+    word.className = 'w-word';
+    line.appendChild(word);
+    return line;
+  };
+
+  // For a brand-new node: build the wrapper around it and hand it back.
+  const wrap = (node) => {
+    const line = makeLine();
+    line.firstChild.appendChild(node);
+    return line;
+  };
+
+  // For a node already in the tree: swap the wrapper in first, THEN move the
+  // node inside it — appending first would detach it and break replaceChild.
+  const wrapInPlace = (parent, child) => {
+    const line = makeLine();
+    parent.replaceChild(line, child);
+    line.firstChild.appendChild(child);
+  };
+
+  const walk = (node) => {
+    [...node.childNodes].forEach(child => {
+      if (child.nodeType === Node.TEXT_NODE) {
+        if (!child.textContent.trim()) return;
+        const frag = document.createDocumentFragment();
+        child.textContent.split(/(\s+)/).forEach(part => {
+          if (!part) return;
+          if (/^\s+$/.test(part)) { frag.appendChild(document.createTextNode(' ')); return; }
+          frag.appendChild(wrap(document.createTextNode(part)));
+        });
+        node.replaceChild(frag, child);
+      } else if (child.nodeType === Node.ELEMENT_NODE) {
+        if (child.classList.contains('grad') || child.classList.contains('no-split')) {
+          wrapInPlace(node, child);
+        } else {
+          walk(child);
+        }
+      }
+    });
+  };
+
+  targets.forEach(el => {
+    walk(el);
+    el.querySelectorAll('.w-word').forEach((w, i) => {
+      w.style.transitionDelay = (i * 48) + 'ms';
+    });
+  });
+}
+
+
+/* ── STAGGER CONTAINERS ────────────────────────────────── */
+/* <div data-stagger="70"> hands each animated child an increasing delay,
+   so grids cascade instead of landing all at once. */
+function initStagger() {
+  document.querySelectorAll('[data-stagger]').forEach(box => {
+    const step = parseInt(box.dataset.stagger, 10) || 70;
+    const base = parseInt(box.dataset.staggerStart || '0', 10);
+    [...box.children].forEach((child, i) => {
+      if (!child.hasAttribute('data-anim')) return;
+      if (child.dataset.delay) return;          // explicit delay wins
+      child.dataset.delay = base + i * step;
+    });
+  });
+}
+
+
+/* ── SCROLL PARALLAX ───────────────────────────────────── */
+/* data-parallax="0.12" → drifts at 12% of scroll distance from centre. */
+function initParallax() {
+  const els = [...document.querySelectorAll('[data-parallax]')];
+  if (!els.length || REDUCED) return;
+
+  onScroll(() => {
+    const mid = window.innerHeight / 2;
+    els.forEach(el => {
+      const r = el.getBoundingClientRect();
+      if (r.bottom < -200 || r.top > window.innerHeight + 200) return;
+      const depth = parseFloat(el.dataset.parallax) || 0.1;
+      const offset = (r.top + r.height / 2 - mid) * depth;
+      el.style.transform = `translate3d(0, ${offset.toFixed(2)}px, 0)`;
+    });
+  });
+}
+
+
+/* ── PROFICIENCY METERS ────────────────────────────────── */
+function initMeters() {
+  const fills = document.querySelectorAll('.meter-fill[data-pct]');
+  if (!fills.length) return;
+
+  const run = (el) => { el.style.width = Math.max(0, Math.min(100, +el.dataset.pct)) + '%'; };
+  if (REDUCED || !('IntersectionObserver' in window)) { fills.forEach(run); return; }
+
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (!e.isIntersecting) return;
+      setTimeout(() => run(e.target), i * 90);
+      io.unobserve(e.target);
+    });
+  }, { threshold: 0.5 });
+  fills.forEach(el => io.observe(el));
+}
+
+
 /* ── TYPED ROLES ───────────────────────────────────────── */
 function initTyped() {
   const el = document.getElementById('typed');
@@ -252,6 +437,7 @@ function initTyped() {
     'full stack web applications.',
     'REST APIs with Node & Express.',
     'React interfaces that feel fast.',
+    'test cases that catch real bugs.',
     'TypeScript codebases that scale.',
     'solutions to 272+ DSA problems.'
   ];
@@ -621,7 +807,17 @@ function initContactForm() {
 function initToTop() {
   const btn = document.getElementById('to-top');
   if (!btn) return;
-  onScroll(() => btn.classList.toggle('visible', window.scrollY > 600));
+  const ring = btn.querySelector('.ring-prog circle');
+  const CIRC = 126;   // 2πr for r = 20
+
+  onScroll(() => {
+    btn.classList.toggle('visible', window.scrollY > 600);
+    if (!ring) return;
+    const max = document.documentElement.scrollHeight - window.innerHeight;
+    const pct = max > 0 ? Math.min(window.scrollY / max, 1) : 0;
+    ring.style.strokeDashoffset = CIRC - CIRC * pct;
+  });
+
   btn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: REDUCED ? 'auto' : 'smooth' }));
 }
 

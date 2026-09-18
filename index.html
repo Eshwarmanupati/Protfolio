@@ -3,17 +3,17 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Manupati Eshwar — Full Stack Developer | B.Tech CSE 2027</title>
+  <title>Manupati Eshwar — Full Stack Developer &amp; QA Intern | B.Tech CSE 2027</title>
 
-  <meta name="description" content="Manupati Eshwar — final year B.Tech Computer Engineering student at SR University (2027 batch). Full Stack Developer (MERN, TypeScript, AWS) with 272+ DSA problems solved. Open to SDE and Full Stack internships and full-time roles." />
-  <meta name="keywords" content="Manupati Eshwar, Full Stack Developer, MERN Stack, React, Node.js, TypeScript, AWS, DSA, SR University, 2027 batch, placement, SDE fresher" />
+  <meta name="description" content="Manupati Eshwar — final year B.Tech Computer Engineering student at SR University (2027 batch), currently a remote Manual Test Engineer &amp; Developer intern at Agiledigest Consulting. Full stack developer (MERN, TypeScript, AWS) with 272+ DSA problems solved." />
+  <meta name="keywords" content="Manupati Eshwar, Full Stack Developer, Manual Testing, QA Engineer, MERN Stack, React, Node.js, TypeScript, AWS, DSA, SR University, 2027 batch, placement, SDE fresher" />
   <meta name="author" content="Manupati Eshwar" />
   <meta name="robots" content="index, follow" />
   <meta name="theme-color" content="#07080D" />
 
   <meta property="og:type" content="website" />
-  <meta property="og:title" content="Manupati Eshwar — Full Stack Developer | B.Tech CSE 2027" />
-  <meta property="og:description" content="Final year B.Tech student building production-grade full stack applications. 272+ DSA problems solved, top 3.8% on LeetCode. Open to SDE roles." />
+  <meta property="og:title" content="Manupati Eshwar — Full Stack Developer &amp; QA Intern | B.Tech CSE 2027" />
+  <meta property="og:description" content="Manupati Eshwar — final year B.Tech Computer Engineering student at SR University (2027 batch), currently a remote Manual Test Engineer &amp; Developer intern at Agiledigest Consulting. Full stack developer (MERN, TypeScript, AWS) with 272+ DSA problems solved." />
   <meta property="og:url" content="https://github.com/Eshwarmanupati" />
   <meta name="twitter:card" content="summary_large_image" />
 
@@ -28,10 +28,14 @@
     "@context": "https://schema.org",
     "@type": "Person",
     "name": "Manupati Eshwar",
-    "jobTitle": "Full Stack Developer",
+    "jobTitle": "Manual Test Engineer & Developer (Intern)",
     "email": "mailto:eshwarmanupati@gmail.com",
     "telephone": "+91-8074815165",
     "url": "https://github.com/Eshwarmanupati",
+    "worksFor": {
+      "@type": "Organization",
+      "name": "Agiledigest Consulting Private Limited"
+    },
     "alumniOf": { "@type": "CollegeOrUniversity", "name": "SR University, Warangal" },
     "address": { "@type": "PostalAddress", "addressLocality": "Warangal", "addressRegion": "Telangana", "addressCountry": "India" },
     "sameAs": [
@@ -39,11 +43,14 @@
       "https://www.linkedin.com/in/manupati-eshwar-384b6b22a/",
       "https://leetcode.com/u/Eshwar20/"
     ],
-    "knowsAbout": ["Full Stack Development", "React", "Node.js", "TypeScript", "MongoDB", "AWS", "Data Structures and Algorithms"]
+    "knowsAbout": ["Full Stack Development", "React", "Node.js", "TypeScript", "MongoDB", "AWS", "Manual Software Testing", "Quality Assurance", "Data Structures and Algorithms"]
   }
   </script>
 </head>
 <body>
+
+  <!-- PAGE TRANSITION CURTAIN (retracts on load, closes before navigating away) -->
+  <div class="page-fx in" id="page-fx" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
 
   <!-- LOADER -->
   <div id="loader" aria-hidden="true">
@@ -70,25 +77,23 @@
   <!-- SCROLL PROGRESS -->
   <div class="scroll-progress" aria-hidden="true"><span id="scroll-bar"></span></div>
 
-  <a href="#hero" class="skip-link">Skip to content</a>
+  <a href="#main" class="skip-link">Skip to content</a>
 
   <!-- NAV -->
   <header class="nav-wrap">
     <nav class="navbar" id="navbar" aria-label="Main navigation">
-      <a href="#hero" class="nav-logo" aria-label="Home">
+      <a href="index.html" class="nav-logo" aria-label="Home">
         <span class="nav-logo-mark">E</span>
         <span class="nav-logo-text">Eshwar</span>
       </a>
 
       <div class="nav-links" id="nav-links">
-        <a href="#about">About</a>
-        <a href="#experience">Experience</a>
-        <a href="#skills">Skills</a>
-        <a href="#projects">Projects</a>
-        <a href="#dsa">DSA</a>
-        <a href="#certifications">Certs</a>
-        <a href="#education">Education</a>
-        <a href="#contact">Contact</a>
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="experience.html">Experience</a>
+        <a href="projects.html">Projects</a>
+        <a href="skills.html">Skills &amp; DSA</a>
+        <a href="contact.html">Contact</a>
       </div>
 
       <div class="nav-actions">
@@ -107,7 +112,7 @@
     </nav>
   </header>
 
-  <main>
+  <main id="main">
   <!-- HERO -->
   <section class="hero" id="hero">
     <div class="shell hero-inner">
@@ -115,7 +120,7 @@
       <div class="hero-left">
         <div class="hero-badge" data-anim="fade-up">
           <span class="pulse-dot"></span>
-          Open to SDE / Full Stack roles &middot; 2027 batch
+          Interning now &middot; Open to SDE / Full Stack roles &middot; 2027 batch
         </div>
 
         <h1 class="hero-name" data-anim="chars">Manupati Eshwar</h1>
@@ -126,8 +131,9 @@
         </div>
 
         <p class="hero-desc" data-anim="fade-up" data-delay="200">
-          Final&nbsp;year <strong>B.Tech Computer Engineering</strong> student at SR University, Warangal.
-          I design and ship full stack products end&#8209;to&#8209;end &mdash; React and TypeScript on the front,
+          Final&nbsp;year <strong>B.Tech Computer Engineering</strong> student at SR University, Warangal,
+          currently a remote <strong>Manual Test Engineer &amp; Developer</strong> at Agiledigest Consulting.
+          I ship full stack products end&#8209;to&#8209;end &mdash; React and TypeScript on the front,
           Node.js, Express and MongoDB behind them &mdash; and back that with
           <strong>272+ DSA problems</strong> solved on LeetCode.
         </p>
@@ -143,12 +149,12 @@
           </span>
           <span class="hero-meta-item">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 14"/></svg>
-            Available for internships now
+            6+ months industry experience
           </span>
         </div>
 
         <div class="hero-cta" data-anim="fade-up" data-delay="320">
-          <a href="#projects" class="btn btn-primary magnetic">
+          <a href="projects.html" class="btn btn-primary magnetic">
             View Projects
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
           </a>
@@ -156,9 +162,9 @@
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
             Download Resume
           </a>
-          <a href="mailto:eshwarmanupati@gmail.com" class="btn btn-ghost magnetic">
+          <a href="contact.html" class="btn btn-ghost magnetic">
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="22,6 12,13 2,6"/></svg>
-            Email Me
+            Get in touch
           </a>
         </div>
 
@@ -191,7 +197,8 @@
           </div>
 
           <dl class="snapshot-rows">
-            <div><dt>Target roles</dt><dd>SDE &middot; Full Stack &middot; Backend</dd></div>
+            <div><dt>Currently</dt><dd>QA &amp; Dev Intern &middot; Agiledigest</dd></div>
+            <div><dt>Target roles</dt><dd>SDE &middot; Full Stack &middot; QA</dd></div>
             <div><dt>Graduating</dt><dd>B.Tech CSE, 2027</dd></div>
             <div><dt>Core stack</dt><dd>React &middot; Node &middot; TypeScript</dd></div>
             <div><dt>Location</dt><dd>Warangal, IN &middot; will relocate</dd></div>
@@ -211,8 +218,8 @@
               <span class="stat-label">Repositories</span>
             </div>
             <div class="stat">
-              <span class="stat-value" data-count="5">0</span>
-              <span class="stat-label">Certifications</span>
+              <span class="stat-value" data-count="6" data-suffix=" mo">0</span>
+              <span class="stat-label">Internship so far</span>
             </div>
           </div>
 
@@ -228,7 +235,7 @@
       </aside>
     </div>
 
-    <a href="#about" class="scroll-hint" aria-label="Scroll to about">
+    <a href="#now" class="scroll-hint" aria-label="Scroll down">
       <span class="mouse"><span></span></span>
       Scroll
     </a>
@@ -237,514 +244,118 @@
   <!-- TECH MARQUEE -->
   <div class="marquee" aria-hidden="true">
     <div class="marquee-track">
-      <span>JavaScript</span><span>TypeScript</span><span>React</span><span>Node.js</span><span>Express</span><span>MongoDB</span><span>MySQL</span><span>Java</span><span>Python</span><span>C++</span><span>AWS</span><span>Git</span><span>REST APIs</span><span>Data Structures</span><span>System Design</span><span>Prompt Engineering</span>
-      <span>JavaScript</span><span>TypeScript</span><span>React</span><span>Node.js</span><span>Express</span><span>MongoDB</span><span>MySQL</span><span>Java</span><span>Python</span><span>C++</span><span>AWS</span><span>Git</span><span>REST APIs</span><span>Data Structures</span><span>System Design</span><span>Prompt Engineering</span>
+      <span>JavaScript</span><span>TypeScript</span><span>React</span><span>Node.js</span><span>Express</span><span>MongoDB</span><span>MySQL</span><span>Java</span><span>Python</span><span>C++</span><span>AWS</span><span>Git</span><span>REST APIs</span><span>Manual Testing</span><span>Test Cases</span><span>JIRA</span><span>Postman</span><span>Data Structures</span><span>System Design</span>
+      <span>JavaScript</span><span>TypeScript</span><span>React</span><span>Node.js</span><span>Express</span><span>MongoDB</span><span>MySQL</span><span>Java</span><span>Python</span><span>C++</span><span>AWS</span><span>Git</span><span>REST APIs</span><span>Manual Testing</span><span>Test Cases</span><span>JIRA</span><span>Postman</span><span>Data Structures</span><span>System Design</span>
     </div>
   </div>
 
-  <!-- ABOUT -->
-  <section class="section" id="about">
+  <!-- CURRENTLY -->
+  <section class="section" id="now">
     <div class="shell">
       <header class="section-head">
-        <span class="section-kicker" data-anim="fade-up">01 &mdash; About</span>
-        <h2 class="section-title" data-anim="fade-up" data-delay="60">An engineering student who <span class="grad">ships</span></h2>
-        <p class="section-sub" data-anim="fade-up" data-delay="120">Four years of coursework, six shipped applications, and a daily DSA habit.</p>
+        <span class="section-kicker" data-anim="fade-up">Right now</span>
+        <h2 class="section-title" data-anim="words" data-delay="60">Working remotely as a <span class="grad">QA &amp; Developer</span></h2>
+        <p class="section-sub" data-anim="fade-up" data-delay="120">Six months into my first industry role &mdash; and continuing alongside final year until placements.</p>
       </header>
 
-      <div class="about-grid">
-        <div class="about-code card" data-anim="fade-right">
-          <div class="code-bar"><i></i><i></i><i></i><span>about.ts</span></div>
-          <pre><code><span class="c-key">const</span> <span class="c-var">eshwar</span>: <span class="c-type">Engineer</span> = {
-  <span class="c-prop">name</span>: <span class="c-str">"Manupati Eshwar"</span>,
-  <span class="c-prop">role</span>: <span class="c-str">"Full Stack Developer"</span>,
-  <span class="c-prop">education</span>: <span class="c-str">"B.Tech CSE, SR University"</span>,
-  <span class="c-prop">year</span>: <span class="c-num">4</span>, <span class="c-cmt">// final year, 2027 batch</span>
-  <span class="c-prop">stack</span>: [<span class="c-str">"React"</span>, <span class="c-str">"TypeScript"</span>, <span class="c-str">"Node"</span>],
-  <span class="c-prop">cloud</span>: [<span class="c-str">"AWS"</span>],
-  <span class="c-prop">dsa</span>: { <span class="c-prop">solved</span>: <span class="c-num">272</span>, <span class="c-prop">rank</span>: <span class="c-str">"top 3.8%"</span> },
-  <span class="c-prop">openTo</span>: [<span class="c-str">"SDE"</span>, <span class="c-str">"Full Stack"</span>, <span class="c-str">"Backend"</span>],
-  <span class="c-prop">motto</span>: <span class="c-str">"Build. Ship. Repeat."</span>
-};</code></pre>
+      <article class="card now-card" data-anim="rise">
+        <div class="now-head">
+          <span class="now-logo">AD</span>
+          <div class="now-titles">
+            <h3>Manual Test Engineer &amp; Developer &mdash; Intern</h3>
+            <p>Agiledigest Consulting Private Limited &middot; Remote &middot; Mar 2026 &ndash; Present</p>
+          </div>
+          <span class="badge-live"><span class="pulse-dot"></span>Currently working</span>
         </div>
 
-        <div class="about-copy" data-anim="fade-left" data-delay="80">
-          <p>
-            I am in my <strong>final year of B.Tech Computer Engineering</strong> at SR University, and most of
-            what I know came from building things people actually use &mdash; a job platform for students, a
-            digital wallet, a real-time attendance system for classrooms.
-          </p>
-          <p>
-            I like owning a feature from schema to deployment: modelling the data, writing the API, wiring the
-            UI, and handling the edge cases nobody demos. Alongside that I keep a steady DSA routine, which is
-            where the <strong>272+ solved problems and top 3.8% LeetCode standing</strong> come from.
-          </p>
-          <p>
-            Right now I am looking for a <strong>software engineering internship or full-time role</strong>
-            where I can work on real products with engineers who review code seriously.
-          </p>
+        <div class="now-body">
+          <div class="now-facts">
+            <span class="now-fact"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 14"/></svg>6+ months and ongoing</span>
+            <span class="now-fact"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>Fully remote</span>
+            <span class="now-fact"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>Manual QA + development</span>
+            <span class="now-fact"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>Alongside final year</span>
+          </div>
 
-          <ul class="about-points">
-            <li>
-              <span class="about-point-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
-              </span>
-              <div><strong>End-to-end delivery</strong><p>Auth, REST APIs, database design, responsive UI, deployment.</p></div>
-            </li>
-            <li>
-              <span class="about-point-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3 6 6 .9-4.5 4.3 1.1 6.3L12 16.5 6.4 19.5l1.1-6.3L3 8.9 9 8z"/></svg>
-              </span>
-              <div><strong>Problem solving</strong><p>272+ LeetCode problems, 75.3% acceptance, beats 96.2% of users.</p></div>
-            </li>
-            <li>
-              <span class="about-point-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-              </span>
-              <div><strong>Team delivery</strong><p>Built Mahayudh with a 3+ developer team under hackathon deadlines.</p></div>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- EXPERIENCE -->
-  <section class="section" id="experience">
-    <div class="shell">
-      <header class="section-head">
-        <span class="section-kicker" data-anim="fade-up">02 &mdash; Experience</span>
-        <h2 class="section-title" data-anim="fade-up" data-delay="60">Where I have <span class="grad">worked &amp; built</span></h2>
-        <p class="section-sub" data-anim="fade-up" data-delay="120">Training, team projects, and the work behind the repositories.</p>
-      </header>
-
-      <ol class="timeline" id="timeline">
-        <li class="tl-item" data-anim="fade-up">
-          <span class="tl-node"></span>
-          <div class="tl-card card">
-            <div class="tl-top">
-              <div>
-                <h3>Java Full Stack Development &mdash; Internship / Training</h3>
-                <p class="tl-org">Industry training programme</p>
-              </div>
-              <span class="tl-date">2024</span>
+          <div class="now-cols">
+            <div>
+              <h4>What I do there</h4>
+              <ul class="now-list">
+                <li>Write and execute manual test cases against requirements before each release.</li>
+                <li>Run functional, regression and cross-browser passes on web modules.</li>
+                <li>Log defects with clear reproduction steps, severity and evidence, then retest fixes.</li>
+                <li>Pick up development tasks &mdash; bug fixes and small features &mdash; alongside the QA work.</li>
+              </ul>
             </div>
-            <ul class="tl-points">
-              <li>Completed a structured Java full stack programme covering Spring Boot, Hibernate and MySQL.</li>
-              <li>Built CRUD-driven web modules with server-side validation and relational schema design.</li>
-              <li>Practised MVC layering, REST endpoints and Bootstrap-based responsive interfaces.</li>
-            </ul>
-            <div class="tag-row"><span>Java</span><span>Spring Boot</span><span>Hibernate</span><span>MySQL</span><span>Bootstrap</span></div>
-          </div>
-        </li>
-
-        <li class="tl-item" data-anim="fade-up" data-delay="80">
-          <span class="tl-node"></span>
-          <div class="tl-card card">
-            <div class="tl-top">
-              <div>
-                <h3>Full Stack Developer &mdash; Mahayudh (Team Project)</h3>
-                <p class="tl-org">Hackathon build &middot; team of 3+ developers</p>
-              </div>
-              <span class="tl-date">2026</span>
+            <div>
+              <h4>What it taught me</h4>
+              <ul class="now-list qa">
+                <li>How a real SDLC/STLC cycle runs, from requirement to sign-off.</li>
+                <li>To read a feature the way a user will break it, not the way I built it.</li>
+                <li>Writing code that is easier to test &mdash; smaller units, clearer states.</li>
+                <li>Communicating findings to developers without friction.</li>
+              </ul>
             </div>
-            <ul class="tl-points">
-              <li>Co-built a two-sided job and opportunity platform for students and recruiters.</li>
-              <li>Implemented role-based authentication separating student and recruiter permissions.</li>
-              <li>Shipped the job posting and application pipeline with real-time status updates.</li>
-              <li>Collaborated in a shared TypeScript codebase using branch-based Git workflow.</li>
-            </ul>
-            <div class="tag-row"><span>TypeScript</span><span>React</span><span>Node.js</span><span>MongoDB</span></div>
           </div>
-        </li>
 
-        <li class="tl-item" data-anim="fade-up" data-delay="160">
-          <span class="tl-node"></span>
-          <div class="tl-card card">
-            <div class="tl-top">
-              <div>
-                <h3>Independent Projects &mdash; Full Stack</h3>
-                <p class="tl-org">Self-directed &middot; 6 shipped applications</p>
-              </div>
-              <span class="tl-date">2024 &mdash; Present</span>
-            </div>
-            <ul class="tl-points">
-              <li>Designed and delivered Mini PayTM, Live Attendance, Credex, Prowider Mini, an LMS and a chat app.</li>
-              <li>Owned data modelling, REST API design, authentication and responsive front ends on each.</li>
-              <li>Maintain 21+ public repositories with documented, reviewable source code.</li>
-            </ul>
-            <div class="tag-row"><span>MERN</span><span>REST APIs</span><span>Auth</span><span>Git</span></div>
-          </div>
-        </li>
-      </ol>
-    </div>
-  </section>
+          <div class="tag-row"><span>Manual Testing</span><span>Test Case Design</span><span>Regression Testing</span><span>Bug Reporting</span><span>SDLC / STLC</span><span>API Testing</span><span>SQL</span><span>Agile</span></div>
 
-  <!-- SKILLS -->
-  <section class="section" id="skills">
-    <div class="shell">
-      <header class="section-head">
-        <span class="section-kicker" data-anim="fade-up">03 &mdash; Skills</span>
-        <h2 class="section-title" data-anim="fade-up" data-delay="60">The <span class="grad">toolkit</span></h2>
-        <p class="section-sub" data-anim="fade-up" data-delay="120">What I reach for when building production-style applications.</p>
-      </header>
-
-      <div class="skills-grid">
-        <article class="card skill-card tilt" data-anim="fade-up">
-          <div class="skill-icon i-violet"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></div>
-          <h3>Frontend</h3>
-          <p>Component-driven interfaces that hold up on a phone and a projector.</p>
-          <div class="tag-row"><span>React</span><span>JavaScript</span><span>TypeScript</span><span>HTML5</span><span>CSS3</span><span>Responsive UI</span></div>
-        </article>
-
-        <article class="card skill-card tilt" data-anim="fade-up" data-delay="60">
-          <div class="skill-icon i-indigo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M9 9h6v6H9z"/><path d="M15 2v2M9 2v2M15 20v2M9 20v2M2 15h2M2 9h2M20 15h2M20 9h2"/></svg></div>
-          <h3>Backend</h3>
-          <p>REST APIs, authentication, and the business logic underneath them.</p>
-          <div class="tag-row"><span>Node.js</span><span>Express.js</span><span>REST APIs</span><span>JWT Auth</span><span>Java</span><span>Spring Boot</span></div>
-        </article>
-
-        <article class="card skill-card tilt" data-anim="fade-up" data-delay="120">
-          <div class="skill-icon i-cyan"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg></div>
-          <h3>Databases</h3>
-          <p>Schema design, relationships and queries that hold up under load.</p>
-          <div class="tag-row"><span>MongoDB</span><span>MySQL</span><span>Mongoose</span><span>Schema Design</span></div>
-        </article>
-
-        <article class="card skill-card tilt" data-anim="fade-up" data-delay="180">
-          <div class="skill-icon i-emerald"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/></svg></div>
-          <h3>Cloud &amp; Tools</h3>
-          <p>Getting code off localhost and into somewhere people can reach it.</p>
-          <div class="tag-row"><span>AWS Cloud</span><span>Git</span><span>GitHub</span><span>Vercel</span><span>Postman</span></div>
-        </article>
-
-        <article class="card skill-card tilt" data-anim="fade-up" data-delay="240">
-          <div class="skill-icon i-amber"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/><line x1="14" y1="4" x2="10" y2="20"/></svg></div>
-          <h3>Languages</h3>
-          <p>Comfortable switching syntax when the problem calls for it.</p>
-          <div class="tag-row"><span>Java</span><span>JavaScript</span><span>TypeScript</span><span>Python</span><span>C++</span><span>SQL</span></div>
-        </article>
-
-        <article class="card skill-card tilt" data-anim="fade-up" data-delay="300">
-          <div class="skill-icon i-rose"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
-          <h3>CS Fundamentals</h3>
-          <p>The interview-facing core, practised rather than memorised.</p>
-          <div class="tag-row"><span>Data Structures</span><span>Algorithms</span><span>OOP</span><span>DBMS</span><span>Operating Systems</span><span>Computer Networks</span></div>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <!-- PROJECTS -->
-  <section class="section" id="projects">
-    <div class="shell">
-      <header class="section-head">
-        <span class="section-kicker" data-anim="fade-up">04 &mdash; Projects</span>
-        <h2 class="section-title" data-anim="fade-up" data-delay="60">Things I have <span class="grad">shipped</span></h2>
-        <p class="section-sub" data-anim="fade-up" data-delay="120">Each one solved a real problem for a real group of users.</p>
-      </header>
-
-      <article class="featured card tilt" data-anim="fade-up">
-        <div class="featured-visual">
-          <span class="featured-ribbon">Flagship</span>
-          <div class="featured-glyph">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-          </div>
-          <div class="featured-metrics">
-            <div><strong>2</strong><span>user roles</span></div>
-            <div><strong>3+</strong><span>devs on team</span></div>
-            <div><strong>TS</strong><span>codebase</span></div>
-          </div>
-        </div>
-        <div class="featured-body">
-          <h3>Mahayudh &mdash; Job &amp; Opportunity Platform</h3>
-          <p class="featured-lead">
-            A two-sided platform where students discover jobs, internships and competitions while recruiters
-            post and manage openings &mdash; built with a team of 3+ developers under hackathon deadlines.
-          </p>
-          <ul class="check-list">
-            <li>Role-based authentication separating student and recruiter permissions</li>
-            <li>Job posting, discovery and application pipeline with real-time status</li>
-            <li>Recruiter dashboard for managing listings and reviewing applicants</li>
-            <li>TypeScript throughout for type-safe contracts across the team</li>
-          </ul>
-          <div class="tag-row"><span>TypeScript</span><span>React</span><span>Node.js</span><span>MongoDB</span></div>
-          <div class="project-links">
-            <a href="https://github.com/Eshwarmanupati/Mahayudh" class="btn btn-sm btn-primary magnetic" target="_blank" rel="noopener noreferrer">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
-              Source Code
-            </a>
-          </div>
+          <a href="experience.html" class="btn btn-ghost magnetic" style="justify-self:start">
+            See the full experience
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
         </div>
       </article>
 
-      <div class="filters" id="filters" data-anim="fade-up" role="tablist" aria-label="Project filters">
-        <button class="filter active" data-filter="all" role="tab" aria-selected="true">All</button>
-        <button class="filter" data-filter="fullstack" role="tab" aria-selected="false">Full Stack</button>
-        <button class="filter" data-filter="typescript" role="tab" aria-selected="false">TypeScript</button>
-        <button class="filter" data-filter="realtime" role="tab" aria-selected="false">Real-time</button>
+      <div class="strip" data-anim="fade-up" data-delay="80" style="margin-top:22px">
+        <div><div class="strip-value" data-count="6" data-suffix="+">0</div><div class="strip-label">Months of industry experience</div></div>
+        <div><div class="strip-value" data-count="6">0</div><div class="strip-label">Full stack apps shipped</div></div>
+        <div><div class="strip-value" data-count="272" data-suffix="+">0</div><div class="strip-label">DSA problems solved</div></div>
+        <div><div class="strip-value" data-count="5">0</div><div class="strip-label">Industry certifications</div></div>
       </div>
+    </div>
+  </section>
 
-      <div class="projects-grid" id="projects-grid"></div>
+  <!-- EXPLORE -->
+  <section class="section" id="explore">
+    <div class="shell">
+      <header class="section-head">
+        <span class="section-kicker" data-anim="fade-up">Explore</span>
+        <h2 class="section-title" data-anim="words" data-delay="60">Everything, <span class="grad">one page at a time</span></h2>
+        <p class="section-sub" data-anim="fade-up" data-delay="120">Short on time? The experience and projects pages carry the most signal.</p>
+      </header>
 
-      <div class="section-cta" data-anim="fade-up">
-        <a href="https://github.com/Eshwarmanupati?tab=repositories" class="btn btn-ghost magnetic" target="_blank" rel="noopener noreferrer">
-          See all 21+ repositories on GitHub
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M7 17 17 7M8 7h9v9"/></svg>
+      <div class="teaser-grid" data-stagger="80">
+        <a href="about.html" class="card teaser tilt" data-anim="flip-up">
+          <span class="teaser-num">01 / ABOUT</span>
+          <h3>Who I am</h3>
+          <p>Final year CSE at SR University, how I work, and the coursework behind it.</p>
+          <span class="teaser-go">Read about me <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+        </a>
+        <a href="experience.html" class="card teaser tilt" data-anim="flip-up">
+          <span class="teaser-num">02 / EXPERIENCE</span>
+          <h3>Where I work</h3>
+          <p>My current QA &amp; development internship at Agiledigest, plus earlier training and team builds.</p>
+          <span class="teaser-go">See experience <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+        </a>
+        <a href="projects.html" class="card teaser tilt" data-anim="flip-up">
+          <span class="teaser-num">03 / PROJECTS</span>
+          <h3>What I ship</h3>
+          <p>Six full stack applications &mdash; wallets, attendance, LMS, chat &mdash; with source on GitHub.</p>
+          <span class="teaser-go">Browse projects <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+        </a>
+        <a href="skills.html" class="card teaser tilt" data-anim="flip-up">
+          <span class="teaser-num">04 / SKILLS &amp; DSA</span>
+          <h3>What I know</h3>
+          <p>The toolkit, honest proficiency levels, and 272+ solved problems broken down by difficulty.</p>
+          <span class="teaser-go">View skills <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
         </a>
       </div>
-    </div>
-  </section>
 
-  <!-- DSA -->
-  <section class="section" id="dsa">
-    <div class="shell">
-      <header class="section-head">
-        <span class="section-kicker" data-anim="fade-up">05 &mdash; Problem Solving</span>
-        <h2 class="section-title" data-anim="fade-up" data-delay="60">DSA, <span class="grad">every day</span></h2>
-        <p class="section-sub" data-anim="fade-up" data-delay="120">The part of prep that shows up in interviews &mdash; and in cleaner production code.</p>
-      </header>
-
-      <div class="dsa-grid">
-        <div class="card dsa-rings" data-anim="fade-right">
-          <h3 class="card-heading">Difficulty breakdown</h3>
-          <div class="rings">
-            <div class="ring-item">
-              <svg class="ring" viewBox="0 0 120 120" aria-hidden="true">
-                <circle class="ring-bg" cx="60" cy="60" r="50"/>
-                <circle class="ring-fg easy" cx="60" cy="60" r="50" data-pct="55"/>
-              </svg>
-              <div class="ring-center"><span class="ring-val" data-count="150">0</span><span class="ring-lbl">Easy</span></div>
-            </div>
-            <div class="ring-item">
-              <svg class="ring" viewBox="0 0 120 120" aria-hidden="true">
-                <circle class="ring-bg" cx="60" cy="60" r="50"/>
-                <circle class="ring-fg medium" cx="60" cy="60" r="50" data-pct="40"/>
-              </svg>
-              <div class="ring-center"><span class="ring-val" data-count="108">0</span><span class="ring-lbl">Medium</span></div>
-            </div>
-            <div class="ring-item">
-              <svg class="ring" viewBox="0 0 120 120" aria-hidden="true">
-                <circle class="ring-bg" cx="60" cy="60" r="50"/>
-                <circle class="ring-fg hard" cx="60" cy="60" r="50" data-pct="5"/>
-              </svg>
-              <div class="ring-center"><span class="ring-val" data-count="14">0</span><span class="ring-lbl">Hard</span></div>
-            </div>
-          </div>
-          <p class="dsa-note">Each ring shows that tier&rsquo;s share of my 272+ solved problems on LeetCode.</p>
-        </div>
-
-        <div class="dsa-side">
-          <div class="dsa-stats">
-            <div class="card mini-stat" data-anim="fade-up">
-              <span class="mini-value">Top 3.8%</span>
-              <span class="mini-label">Global ranking</span>
-            </div>
-            <div class="card mini-stat" data-anim="fade-up" data-delay="60">
-              <span class="mini-value">75.3%</span>
-              <span class="mini-label">Acceptance rate</span>
-            </div>
-            <div class="card mini-stat" data-anim="fade-up" data-delay="120">
-              <span class="mini-value">96.2%</span>
-              <span class="mini-label">Users beaten</span>
-            </div>
-            <div class="card mini-stat" data-anim="fade-up" data-delay="180">
-              <span class="mini-value" data-count="272" data-suffix="+">0</span>
-              <span class="mini-label">Total solved</span>
-            </div>
-          </div>
-
-          <div class="card dsa-topics" data-anim="fade-up" data-delay="120">
-            <h3 class="card-heading">Topics I&rsquo;m strongest in</h3>
-            <div class="topic-grid">
-              <div class="topic"><strong>Graphs</strong><span>BFS &middot; DFS &middot; Union Find</span></div>
-              <div class="topic"><strong>Trees &amp; BST</strong><span>Traversals &middot; Recursion</span></div>
-              <div class="topic"><strong>Dynamic Programming</strong><span>Memoisation &middot; Tabulation</span></div>
-              <div class="topic"><strong>Core patterns</strong><span>Binary Search &middot; Sliding Window &middot; Greedy</span></div>
-            </div>
-            <a href="https://leetcode.com/u/Eshwar20/" class="btn btn-sm btn-ghost magnetic" target="_blank" rel="noopener noreferrer">
-              View LeetCode profile
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M7 17 17 7M8 7h9v9"/></svg>
-            </a>
-          </div>
-        </div>
-      </div>
-
-      <div class="card contrib-card" data-anim="fade-up">
-        <div class="contrib-head">
-          <h3 class="card-heading">Coding activity</h3>
-          <span class="contrib-note">Consistency over intensity</span>
-        </div>
-        <div class="contrib-grid" id="contrib-grid"></div>
-        <div class="contrib-legend"><span>Less</span><i data-level="0"></i><i data-level="1"></i><i data-level="2"></i><i data-level="3"></i><i data-level="4"></i><span>More</span></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- CERTIFICATIONS -->
-  <section class="section" id="certifications">
-    <div class="shell">
-      <header class="section-head">
-        <span class="section-kicker" data-anim="fade-up">06 &mdash; Certifications</span>
-        <h2 class="section-title" data-anim="fade-up" data-delay="60">Verified <span class="grad">credentials</span></h2>
-        <p class="section-sub" data-anim="fade-up" data-delay="120">Industry programmes completed alongside coursework.</p>
-      </header>
-
-      <div class="certs-grid">
-        <article class="card cert tilt" data-anim="fade-up">
-          <div class="cert-icon i-emerald"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/></svg></div>
-          <span class="cert-tag">Cloud</span>
-          <h3>AWS Academy Graduate &mdash; Cloud Foundations</h3>
-          <p class="cert-org">Amazon Web Services &middot; 2024</p>
-          <div class="tag-row"><span>EC2</span><span>S3</span><span>IAM</span><span>Cloud Architecture</span></div>
-        </article>
-
-        <article class="card cert tilt" data-anim="fade-up" data-delay="60">
-          <div class="cert-icon i-violet"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M9 9h6v6H9z"/><path d="M15 2v2M9 2v2M15 20v2M9 20v2M2 15h2M2 9h2M20 15h2M20 9h2"/></svg></div>
-          <span class="cert-tag">AI</span>
-          <h3>Building LLM Apps with Prompt Engineering</h3>
-          <p class="cert-org">NVIDIA &middot; 2024</p>
-          <div class="tag-row"><span>LLMs</span><span>Prompt Engineering</span><span>AI Apps</span></div>
-        </article>
-
-        <article class="card cert tilt" data-anim="fade-up" data-delay="120">
-          <div class="cert-icon i-indigo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 3v18h18"/><path d="M18.7 8l-5.1 5.2-2.8-2.7L7 14.3"/></svg></div>
-          <span class="cert-tag">Business</span>
-          <h3>Career Essentials in Business Analysis</h3>
-          <p class="cert-org">Microsoft &amp; LinkedIn &middot; 2024</p>
-          <div class="tag-row"><span>Requirements</span><span>Stakeholders</span><span>Process Mapping</span></div>
-        </article>
-
-        <article class="card cert tilt" data-anim="fade-up" data-delay="180">
-          <div class="cert-icon i-cyan"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 3v18h18"/><rect x="7" y="13" width="3" height="5" rx="0.5"/><rect x="14" y="8" width="3" height="10" rx="0.5"/></svg></div>
-          <span class="cert-tag">Data</span>
-          <h3>GenAI Powered Data Analytics Simulation</h3>
-          <p class="cert-org">Tata via Forage &middot; 2025</p>
-          <div class="tag-row"><span>Data Analysis</span><span>GenAI</span><span>Reporting</span></div>
-        </article>
-
-        <article class="card cert tilt" data-anim="fade-up" data-delay="240">
-          <div class="cert-icon i-amber"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/><line x1="14" y1="4" x2="10" y2="20"/></svg></div>
-          <span class="cert-tag">Full Stack</span>
-          <h3>Java Full Stack Development Internship</h3>
-          <p class="cert-org">Industry training &middot; 2024</p>
-          <div class="tag-row"><span>Java</span><span>Spring Boot</span><span>Hibernate</span><span>MySQL</span></div>
-        </article>
-
-        <article class="card cert cert-cta" data-anim="fade-up" data-delay="300">
-          <h3>More on LinkedIn</h3>
-          <p class="cert-org">Full credential list with issuer verification.</p>
-          <a href="https://www.linkedin.com/in/manupati-eshwar-384b6b22a/" class="btn btn-sm btn-ghost magnetic" target="_blank" rel="noopener noreferrer">
-            View profile
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M7 17 17 7M8 7h9v9"/></svg>
-          </a>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <!-- EDUCATION -->
-  <section class="section" id="education">
-    <div class="shell">
-      <header class="section-head">
-        <span class="section-kicker" data-anim="fade-up">07 &mdash; Education</span>
-        <h2 class="section-title" data-anim="fade-up" data-delay="60">Academic <span class="grad">background</span></h2>
-      </header>
-
-      <div class="card edu" data-anim="fade-up">
-        <div class="edu-main">
-          <div class="edu-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg></div>
-          <div>
-            <h3>B.Tech &mdash; Computer Engineering</h3>
-            <p class="edu-college">SR University, Warangal</p>
-            <div class="edu-meta">
-              <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>2023 &mdash; 2027</span>
-              <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Warangal, Telangana</span>
-              <span class="edu-pill">Final year &middot; 4th year</span>
-              <!-- Add your CGPA here when you want it public:
-              <span class="edu-pill">CGPA 8.5 / 10</span> -->
-            </div>
-          </div>
-        </div>
-
-        <div class="edu-cols">
-          <div>
-            <h4>Core coursework</h4>
-            <div class="tag-row"><span>Data Structures</span><span>Algorithms</span><span>DBMS</span><span>Operating Systems</span><span>Computer Networks</span><span>OOP with Java</span><span>Software Engineering</span></div>
-          </div>
-          <div>
-            <h4>Focus areas</h4>
-            <div class="tag-row"><span>Full Stack Development</span><span>Cloud Computing</span><span>Artificial Intelligence</span><span>Data Analytics</span><span>System Design</span></div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- CONTACT -->
-  <section class="section" id="contact">
-    <div class="shell">
-      <header class="section-head">
-        <span class="section-kicker" data-anim="fade-up">08 &mdash; Contact</span>
-        <h2 class="section-title" data-anim="fade-up" data-delay="60">Let&rsquo;s <span class="grad">talk</span></h2>
-        <p class="section-sub" data-anim="fade-up" data-delay="120">Hiring for an SDE or full stack role? I reply within a day.</p>
-      </header>
-
-      <div class="contact-grid">
-        <div class="contact-info" data-anim="fade-right">
-          <a href="mailto:eshwarmanupati@gmail.com" class="card contact-row">
-            <span class="contact-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="22,6 12,13 2,6"/></svg></span>
-            <span class="contact-text"><strong>Email</strong>eshwarmanupati@gmail.com</span>
-            <svg class="contact-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M7 17 17 7M8 7h9v9"/></svg>
-          </a>
-          <a href="tel:+918074815165" class="card contact-row">
-            <span class="contact-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.2 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg></span>
-            <span class="contact-text"><strong>Phone</strong>+91 80748 15165</span>
-            <svg class="contact-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M7 17 17 7M8 7h9v9"/></svg>
-          </a>
-          <a href="https://www.linkedin.com/in/manupati-eshwar-384b6b22a/" class="card contact-row" target="_blank" rel="noopener noreferrer">
-            <span class="contact-ico"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></span>
-            <span class="contact-text"><strong>LinkedIn</strong>in/manupati-eshwar</span>
-            <svg class="contact-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M7 17 17 7M8 7h9v9"/></svg>
-          </a>
-          <a href="https://github.com/Eshwarmanupati" class="card contact-row" target="_blank" rel="noopener noreferrer">
-            <span class="contact-ico"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg></span>
-            <span class="contact-text"><strong>GitHub</strong>github.com/Eshwarmanupati</span>
-            <svg class="contact-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M7 17 17 7M8 7h9v9"/></svg>
-          </a>
-          <a href="https://leetcode.com/u/Eshwar20/" class="card contact-row" target="_blank" rel="noopener noreferrer">
-            <span class="contact-ico"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M13.483 0a1.374 1.374 0 0 0-.961.438L7.116 6.226l-3.854 4.126a5.266 5.266 0 0 0-1.209 2.104 5.35 5.35 0 0 0-.125.513 5.527 5.527 0 0 0 .062 2.362 5.83 5.83 0 0 0 .349 1.017 5.938 5.938 0 0 0 1.271 1.818l4.277 4.193.039.038c2.248 2.165 5.852 2.133 8.063-.074l2.396-2.392c.54-.54.54-1.414.003-1.955a1.378 1.378 0 0 0-1.951-.003l-2.396 2.392a3.021 3.021 0 0 1-4.205.038l-.02-.019-4.276-4.193c-.652-.64-.972-1.469-.948-2.263a2.68 2.68 0 0 1 .066-.523 2.545 2.545 0 0 1 .619-1.164L9.13 8.114c1.058-1.134 3.204-1.27 4.43-.278l3.501 2.831c.593.48 1.461.387 1.94-.207a1.384 1.384 0 0 0-.207-1.943l-3.5-2.831c-.8-.647-1.766-1.045-2.774-1.202l2.015-2.158A1.384 1.384 0 0 0 13.483 0zm-2.866 12.815a1.38 1.38 0 0 0-1.38 1.382 1.38 1.38 0 0 0 1.38 1.382H20.79a1.38 1.38 0 0 0 1.38-1.382 1.38 1.38 0 0 0-1.38-1.382z"/></svg></span>
-            <span class="contact-text"><strong>LeetCode</strong>leetcode.com/u/Eshwar20</span>
-            <svg class="contact-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M7 17 17 7M8 7h9v9"/></svg>
-          </a>
-        </div>
-
-        <form class="card contact-form" id="contact-form" data-anim="fade-left" data-delay="80" novalidate>
-          <h3 class="card-heading">Send a message</h3>
-          <p class="form-note">This opens your mail app with the message ready to send.</p>
-          <div class="form-row">
-            <div class="field">
-              <input type="text" id="name" name="name" placeholder=" " required />
-              <label for="name">Your name</label>
-            </div>
-            <div class="field">
-              <input type="email" id="email" name="email" placeholder=" " required />
-              <label for="email">Email</label>
-            </div>
-          </div>
-          <div class="field">
-            <input type="text" id="company" name="company" placeholder=" " />
-            <label for="company">Company / College (optional)</label>
-          </div>
-          <div class="field">
-            <textarea id="message" name="message" rows="5" placeholder=" " required></textarea>
-            <label for="message">Message</label>
-          </div>
-          <button type="submit" class="btn btn-primary magnetic" id="send-btn">
-            Send message
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-          </button>
-          <p class="form-status" id="form-status" role="status"></p>
-        </form>
+      <div class="section-cta" data-anim="fade-up">
+        <a href="contact.html" class="btn btn-primary magnetic">
+          Hiring? Let&rsquo;s talk
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
       </div>
     </div>
   </section>
@@ -754,11 +365,11 @@
   <footer class="footer">
     <div class="shell footer-inner">
       <div class="footer-brand">
-        <a href="#hero" class="nav-logo">
+        <a href="index.html" class="nav-logo">
           <span class="nav-logo-mark">E</span>
           <span class="nav-logo-text">Manupati Eshwar</span>
         </a>
-        <p>Final year B.Tech Computer Engineering student at SR University. Building full stack products and solving problems every day.</p>
+        <p>Final year B.Tech Computer Engineering student at SR University, currently interning as a Manual Test Engineer &amp; Developer. Building full stack products and solving problems every day.</p>
         <div class="hero-social">
           <a href="https://github.com/Eshwarmanupati" class="icon-btn" aria-label="GitHub" target="_blank" rel="noopener noreferrer"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg></a>
           <a href="https://www.linkedin.com/in/manupati-eshwar-384b6b22a/" class="icon-btn" aria-label="LinkedIn" target="_blank" rel="noopener noreferrer"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
@@ -767,7 +378,7 @@
       </div>
       <nav class="footer-col" aria-label="Footer navigation">
         <h4>Explore</h4>
-        <a href="#about">About</a><a href="#experience">Experience</a><a href="#projects">Projects</a><a href="#dsa">DSA</a><a href="#contact">Contact</a>
+        <a href="about.html">About</a><a href="experience.html">Experience</a><a href="projects.html">Projects</a><a href="skills.html">Skills &amp; DSA</a><a href="contact.html">Contact</a>
       </nav>
       <div class="footer-col">
         <h4>For recruiters</h4>
@@ -784,6 +395,7 @@
   </footer>
 
   <button class="to-top" id="to-top" aria-label="Back to top">
+    <svg class="ring-prog" viewBox="0 0 44 44" aria-hidden="true"><circle cx="22" cy="22" r="20"/></svg>
     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="18 15 12 9 6 15"/></svg>
   </button>
 
