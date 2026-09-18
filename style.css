@@ -1264,3 +1264,86 @@ main.page-enter { animation: pageUp .7s var(--ease-out) both; }
   .sheen::after { display: none !important; }
   .section-kicker::before { width: 26px; margin-right: 10px; }
 }
+
+/* ═══════════════════════════════════════════
+   33. READING RAIL (scroll-reactive avatar)
+   ═══════════════════════════════════════════ */
+/* A slim minimap down the left margin: the monogram rides it as you read,
+   the dots are clickable section jumps. Desktop only — below 1240px there
+   is no margin left over to sit in without colliding with content. */
+.read-rail {
+  position: fixed; z-index: 880;
+  left: max(14px, calc((100vw - var(--shell)) / 2 - 64px));
+  top: 50%; transform: translateY(-50%);
+  width: 34px; height: min(52vh, 400px);
+  display: none;
+  opacity: 0; visibility: hidden;
+  transition: opacity .5s var(--ease), visibility .5s var(--ease);
+}
+@media (min-width: 1240px) { .read-rail { display: block; } }
+.read-rail.show { opacity: 1; visibility: visible; }
+
+.rail-track {
+  position: absolute; left: 50%; top: 0; bottom: 0; width: 2px;
+  transform: translateX(-50%);
+  background: var(--border); border-radius: 2px; overflow: hidden;
+}
+.rail-fill {
+  position: absolute; left: 0; right: 0; top: 0; height: 0;
+  background: linear-gradient(180deg, var(--accent), var(--cyan));
+  border-radius: 2px;
+}
+
+.rail-dot {
+  position: absolute; left: 50%; top: 0;
+  width: 24px; height: 24px; margin: -12px 0 0 -12px;
+  display: grid; place-items: center;
+  border-radius: 50%;
+}
+.rail-dot i {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--border-strong);
+  transition: background .3s var(--ease), transform .35s var(--spring), box-shadow .3s var(--ease);
+}
+.rail-dot:hover i { transform: scale(1.5); background: var(--text-3); }
+.rail-dot.active i {
+  background: var(--accent); transform: scale(1.35);
+  box-shadow: 0 0 0 4px var(--accent-soft);
+}
+.rail-dot span {
+  position: absolute; left: 24px; white-space: nowrap;
+  padding: 5px 11px; border-radius: var(--r-full);
+  background: color-mix(in srgb, var(--bg-2) 94%, transparent);
+  border: 1px solid var(--border); box-shadow: var(--shadow-2);
+  backdrop-filter: blur(12px);
+  font-size: .72rem; font-weight: 600; color: var(--text-2);
+  opacity: 0; transform: translateX(-6px); pointer-events: none;
+  transition: opacity .28s var(--ease), transform .28s var(--ease-out);
+}
+.rail-dot:hover span, .rail-dot:focus-visible span { opacity: 1; transform: none; }
+
+.rail-avatar {
+  position: absolute; left: 50%; top: 0;
+  width: 36px; height: 36px; margin: -18px 0 0 -18px;
+  display: grid; place-items: center;
+  border-radius: 50%; overflow: hidden;
+  background: var(--grad-btn); color: #fff;
+  font-size: .7rem; font-weight: 800; letter-spacing: .02em;
+  box-shadow: var(--glow);
+  pointer-events: none;
+  will-change: transform;
+}
+.rail-avatar img { width: 100%; height: 100%; object-fit: cover; }
+/* Settling spring when scrolling stops; while moving, JS drives it directly. */
+.rail-avatar { transition: transform .45s var(--spring); }
+.read-rail.moving .rail-avatar { transition: transform .05s linear; }
+
+.rail-avatar::after {
+  content: ''; position: absolute; inset: 0; border-radius: 50%;
+  border: 1.5px solid rgba(255, 255, 255, .28);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rail-avatar { transition: none !important; }
+}
+@media print { .read-rail { display: none !important; } }

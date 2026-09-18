@@ -13,6 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initParticles();
   initNav();
   initScrollProgress();
+  initReadRail();
   initHeroName();
   initWordReveal();
   initTyped();
@@ -282,6 +283,121 @@ function initScrollProgress() {
     const max = document.documentElement.scrollHeight - window.innerHeight;
     bar.style.width = (max > 0 ? (window.scrollY / max) * 100 : 0) + '%';
   });
+}
+
+
+/* ── READING RAIL ──────────────────────────────────────── */
+/* A minimap of the page down the left margin. The monogram rides it as you
+   scroll, leaning and squashing with scroll direction and speed, and the
+   dots jump to each section. Built from the DOM so every page gets its own. */
+function initReadRail() {
+  const rail = document.getElementById('read-rail');
+  if (!rail) return;
+
+  const main = document.querySelector('main');
+  if (!main) { rail.remove(); return; }
+
+  const sections = [...main.querySelectorAll('section')].filter(s => s.offsetHeight > 120);
+  const maxScroll = () => document.documentElement.scrollHeight - window.innerHeight;
+
+  // On a page you can barely scroll, a progress minimap is just clutter.
+  if (sections.length < 2 || maxScroll() < 600) { rail.remove(); return; }
+
+  const fill = rail.querySelector('.rail-fill');
+  const avatar = rail.querySelector('.rail-avatar');
+  const track = rail.querySelector('.rail-track');
+
+  const labelFor = (s, i) => {
+    if (s.dataset.rail) return s.dataset.rail;
+    if (s.classList.contains('page-hero') || s.classList.contains('hero')) return 'Top';
+    const kicker = s.querySelector('.section-kicker');
+    if (kicker) {
+      const t = kicker.textContent.replace(/^\s*\d+\s*[—–-]\s*/, '').trim();
+      if (t) return t.length > 24 ? t.slice(0, 23) + '…' : t;
+    }
+    const h = s.querySelector('h2, h1');
+    if (h) {
+      const t = h.textContent.trim();
+      return t.length > 24 ? t.slice(0, 23) + '…' : t;
+    }
+    return 'Section ' + (i + 1);
+  };
+
+  // Build one dot per section.
+  const dots = sections.map((s, i) => {
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'rail-dot';
+    const label = labelFor(s, i);
+    b.setAttribute('aria-label', 'Jump to ' + label);
+    b.innerHTML = '<i></i>';
+    const tag = document.createElement('span');
+    tag.textContent = label;
+    b.appendChild(tag);
+    b.addEventListener('click', () => {
+      const y = i === 0 ? 0 : s.offsetTop - 80;
+      window.scrollTo({ top: y, behavior: REDUCED ? 'auto' : 'smooth' });
+    });
+    track.parentNode.appendChild(b);
+    return b;
+  });
+
+  let railH = 0;
+  const measure = () => { railH = rail.clientHeight; place(); };
+
+  // Dot positions are in scroll-progress space, the same space the avatar
+  // travels in, so a dot sits exactly where the avatar will be when that
+  // section becomes active.
+  function place() {
+    const max = Math.max(1, maxScroll());
+    sections.forEach((s, i) => {
+      const target = i === 0 ? 0 : Math.max(0, s.offsetTop - 80);
+      const p = Math.max(0, Math.min(target / max, 1));
+      dots[i].style.top = (p * railH) + 'px';
+    });
+  }
+
+  let lastY = window.scrollY, idle = null;
+
+  onScroll(() => {
+    const y = window.scrollY;
+    const max = Math.max(1, maxScroll());
+    const p = Math.max(0, Math.min(y / max, 1));
+
+    rail.classList.toggle('show', y > 260);
+    fill.style.height = (p * railH) + 'px';
+
+    const vel = y - lastY;
+    lastY = y;
+
+    const rest = 'translate3d(0, ' + (p * railH).toFixed(1) + 'px, 0)';
+    let transform = rest;
+    if (!REDUCED && Math.abs(vel) > 0.5) {
+      // Lean into the direction of travel and stretch a little with speed.
+      const tilt = Math.max(-10, Math.min(vel * 0.42, 10));
+      const stretch = Math.min(Math.abs(vel) * 0.004, 0.12);
+      transform += ' rotate(' + tilt.toFixed(1) + 'deg) scale(' + (1 - stretch * 0.5).toFixed(3) + ', ' + (1 + stretch).toFixed(3) + ')';
+      rail.classList.add('moving');
+      clearTimeout(idle);
+      // Scrolling stops = no more events, so the lean has to be undone here or
+      // the avatar stays frozen mid-tilt.
+      idle = setTimeout(() => {
+        rail.classList.remove('moving');
+        avatar.style.transform = rest;
+      }, 130);
+    }
+    avatar.style.transform = transform;
+
+    // Active section: the last one whose top has passed the reading line.
+    const line = y + window.innerHeight * 0.3;
+    let active = 0;
+    sections.forEach((s, i) => { if (s.offsetTop <= line) active = i; });
+    dots.forEach((d, i) => d.classList.toggle('active', i === active));
+  });
+
+  measure();
+  window.addEventListener('resize', debounce(measure, 160));
+  window.addEventListener('load', measure);
 }
 
 

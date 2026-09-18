@@ -5,7 +5,7 @@ SR University, Warangal (2027 batch), currently working remotely as a **Manual T
 Developer** at Agiledigest Consulting Private Limited. Built for placement season: fast,
 responsive and hand-written in plain HTML, CSS and JavaScript — no frameworks, no build step.
 
-**Live:** _add your deployment URL here_
+**Live:** https://eshwarmanupati.github.io/Protfolio/
 
 ---
 
@@ -30,6 +30,7 @@ If you change a nav link, change it in all six files.
 - **Multi-page with animated transitions** — a curtain wipe closes over the page before navigating and retracts on arrival; it is CSS-driven, so it still clears itself if JavaScript fails
 - **Dark / light themes** — follows the system preference, remembers the visitor's choice
 - **Motion throughout** — character-by-character name reveal, word-by-word masked headings, typed roles, scroll reveals, count-ups, animated DSA rings, proficiency meters, parallax page numbers, magnetic buttons, 3D card tilt, spotlight hover, particle field
+- **Reading rail** — a slim minimap down the left margin where the "ME" monogram rides your scroll position, leaning and squashing with scroll direction and speed; the dots are clickable section jumps with hover labels
 - **Accessible** — skip link, keyboard focus styles, ARIA labels, and a full `prefers-reduced-motion` fallback that disables every animation
 - **SEO ready** — per-page titles and descriptions, Open Graph tags, JSON-LD `Person` data on the home page
 - **Zero dependencies** — six pages plus one stylesheet and one script
@@ -56,6 +57,8 @@ Opening `index.html` directly in a browser also works.
 | Typed roles in the hero | `roles` array in `initTyped()` in `script.js` |
 | Current role details | the `.now-card` block in `index.html` and `experience.html` |
 | Proficiency bars | `data-pct` on `.meter-fill` in `skills.html` |
+| Reading-rail avatar | `.rail-avatar` in each page — replace the `ME` text with `<img src="assets/avatar.jpg" alt="" />` for a photo |
+| A reading-rail dot's label | `data-rail="…"` on that `<section>` |
 | Stats, certifications, education | the matching section in `about.html` / `skills.html` |
 | Colours, spacing, radii | `:root` and `[data-theme="light"]` in `style.css` |
 
@@ -76,6 +79,14 @@ Add one of these attributes to any element and it animates in as it scrolls into
 
 Avoid `clip-path` for reveals: a fully clipped element reports an empty intersection rect, so
 `IntersectionObserver` never fires and the element stays hidden.
+
+### Reading rail
+
+`initReadRail()` builds the rail from whatever sections a page has, so new sections appear on it
+automatically. A dot's label comes from `data-rail`, else the section's `.section-kicker` (with any
+leading `01 — ` stripped), else its heading. It removes itself on pages with fewer than two
+sections or under 600px of scroll, and is hidden below 1240px viewport width — narrower than that
+there is no margin for it to sit in without hitting the content.
 
 ## Contact
 
