@@ -35,6 +35,51 @@
 </head>
 <body>
 
+  <!-- GLITCH FILTERS — drive the page transition. feTurbulence with a near-zero
+       horizontal frequency produces noise that only varies down the page, so
+       feDisplacementMap shifts it in horizontal bands: a torn-scanline look
+       rather than a smear. Three seeds give the stutter something to step through. -->
+  <svg class="glitch-defs" aria-hidden="true" focusable="false" width="0" height="0">
+    <defs>
+      <filter id="tear-a" x="-12%" y="-6%" width="124%" height="112%" color-interpolation-filters="sRGB">
+        <feTurbulence type="fractalNoise" baseFrequency="0.00001 0.085" numOctaves="1" seed="7" result="n" />
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="28" xChannelSelector="R" yChannelSelector="G" />
+      </filter>
+      <filter id="tear-b" x="-12%" y="-6%" width="124%" height="112%" color-interpolation-filters="sRGB">
+        <feTurbulence type="fractalNoise" baseFrequency="0.00001 0.14" numOctaves="1" seed="23" result="n" />
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="17" xChannelSelector="R" yChannelSelector="G" />
+      </filter>
+      <filter id="tear-c" x="-12%" y="-6%" width="124%" height="112%" color-interpolation-filters="sRGB">
+        <feTurbulence type="fractalNoise" baseFrequency="0.00001 0.055" numOctaves="1" seed="41" result="n" />
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="36" xChannelSelector="R" yChannelSelector="G" />
+      </filter>
+
+      <!-- Chromatic fringe for the moment just before everything resolves:
+           red and blue pulled apart, then screened back over green. -->
+      <filter id="rgb-split" x="-6%" y="-6%" width="112%" height="112%" color-interpolation-filters="sRGB">
+        <feOffset in="SourceGraphic" dx="-3" dy="0" result="ro" />
+        <feColorMatrix in="ro" type="matrix" result="rc"
+          values="1 0 0 0 0
+                  0 0 0 0 0
+                  0 0 0 0 0
+                  0 0 0 1 0" />
+        <feOffset in="SourceGraphic" dx="3" dy="0" result="bo" />
+        <feColorMatrix in="bo" type="matrix" result="bc"
+          values="0 0 0 0 0
+                  0 0 0 0 0
+                  0 0 1 0 0
+                  0 0 0 1 0" />
+        <feColorMatrix in="SourceGraphic" type="matrix" result="gc"
+          values="0 0 0 0 0
+                  0 1 0 0 0
+                  0 0 0 0 0
+                  0 0 0 1 0" />
+        <feBlend in="rc" in2="gc" mode="screen" result="rg" />
+        <feBlend in="rg" in2="bc" mode="screen" />
+      </filter>
+    </defs>
+  </svg>
+
   <!-- PAGE TRANSITION CURTAIN (retracts on load, closes before navigating away) -->
   <div class="page-fx in" id="page-fx" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
 

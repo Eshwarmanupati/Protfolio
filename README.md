@@ -32,7 +32,7 @@ If you change a nav link, change it in all seven files.
 ## Highlights
 
 - **Recruiter-first hero** — availability, current role, target roles, graduation year and key metrics visible without scrolling
-- **Animated page-change flow** — a glowing bar races across the top on arrival, the content is revealed by an angled wipe rather than a fade, and the page heading and its big outline number carry across documents so the eye follows one element. Direction-aware: rightward through the nav pushes content left, back reverses it. Browsers without view transitions fall back to a JS curtain wipe and keep the flow bar
+- **Glitch & rebuild page transition** — the outgoing page tears into displaced horizontal bands and the incoming one snaps back into alignment through a chromatic fringe, while the nav, footer and reading rail stay perfectly sharp. The frame holds, the content breaks — which is the site's whole argument, in motion. Direction-aware; browsers without view transitions fall back to a JS curtain wipe
 - **Optional profile photo** — drop one file in and it appears everywhere; no HTML to edit
 - **"How I broke it"** — every project card opens to show what I tried, what failed and how I fixed it
 - **Live defect report** — the environment block on the quality page is filled in from the reader's own browser, which is exactly the data a developer needs to reproduce a bug
@@ -98,6 +98,19 @@ Avoid `clip-path` for reveals: a fully clipped element reports an empty intersec
 checks for `CSSViewTransitionRule` — the interface the at-rule exposes, and the honest test for
 *cross-document* support rather than the same-document `startViewTransition()` that shipped
 earlier. When it is present the JS curtain removes itself so the two never run at once.
+
+The tearing comes from three SVG filters in each page's `<head>`. `feTurbulence` with a near-zero
+*horizontal* frequency (`baseFrequency="0.00001 0.085"`) produces noise that only varies down the
+page, so `feDisplacementMap` shifts the image in horizontal bands — a torn scanline rather than a
+smear. Three seeds and three displacement scales give the stutter something to step through, and
+`#rgb-split` pulls the red and blue channels apart for the moment before everything resolves.
+
+Two details that matter if you tune it:
+
+- The keyframes use `steps(1, end)`, not an easing curve. A glitch that eases is not a glitch — and
+  as a bonus the expensive filter is recomputed four times instead of every frame.
+- The two halves are **sequenced, not simultaneous**: the old page finishes tearing out (`.24s`)
+  before the new one starts rebuilding (`.14s` delay). Overlap them and it reads as noise.
 
 Direction comes from `NAV_ORDER` in `script.js`: a click writes `fwd` or `back` to
 `sessionStorage`, and a small inline script in each page's `<head>` reads it onto

@@ -9,7 +9,6 @@ document.addEventListener('DOMContentLoaded', () => {
   initTheme();
   initAvatar();
   initLoader();
-  initPageFlow();
   initPageTransitions();
   initCursor();
   initParticles();
@@ -97,20 +96,6 @@ function initAvatar() {
     probe.src = src;
   };
   tryNext(0);
-}
-
-
-/* ── PAGE-CHANGE FLOW ──────────────────────────────────── */
-/* The sweep bar is injected rather than shipped in the markup so it only ever
-   appears when motion is wanted. */
-function initPageFlow() {
-  if (REDUCED) return;
-  const bar = document.createElement('div');
-  bar.className = 'page-flow';
-  bar.setAttribute('aria-hidden', 'true');
-  bar.innerHTML = '<i></i>';
-  document.body.appendChild(bar);
-  setTimeout(() => bar.remove(), 1400);
 }
 
 
