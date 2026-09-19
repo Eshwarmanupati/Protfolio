@@ -42,28 +42,80 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 
-/* ── THEME ─────────────────────────────────────────────── */
+/* ── THEME / PALETTE ───────────────────────────────────── */
+/* Six palettes. The first two are the originals; the rest exist because a
+   near-black page with an indigo accent is the default look of roughly every
+   developer portfolio, and looking like everyone else is a cost. */
+const PALETTES = [
+  { id: 'dark',      name: 'Midnight',  note: 'Indigo on near-black',  swatch: ['#07080D', '#6366F1', '#22D3EE'] },
+  { id: 'light',     name: 'Daylight',  note: 'Clean and bright',      swatch: ['#F6F7FB', '#4F46E5', '#0891B2'] },
+  { id: 'paper',     name: 'Paper',     note: 'Warm editorial print',  swatch: ['#F3EDE1', '#A8431A', '#1C6F62'] },
+  { id: 'blueprint', name: 'Blueprint', note: 'Engineering drawing',   swatch: ['#061527', '#38BDF8', '#67E8F9'] },
+  { id: 'console',   name: 'Console',   note: 'Terminal lime + amber', swatch: ['#090C09', '#A3E635', '#FBBF24'] },
+  { id: 'ink',       name: 'Ink',       note: 'Mono with one red',     swatch: ['#08080A', '#FF453A', '#A6A6AD'] }
+];
+
 function initTheme() {
   const root = document.documentElement;
-  const btn = document.getElementById('theme-toggle');
+  const wrap = document.getElementById('palette');
+  const btn = document.getElementById('palette-btn');
+  const menu = document.getElementById('palette-menu');
+
   let saved = null;
   try { saved = localStorage.getItem('theme'); } catch (e) { /* private mode */ }
-
+  const valid = PALETTES.some(p => p.id === saved);
   const prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
-  root.setAttribute('data-theme', saved || (prefersLight ? 'light' : 'dark'));
+  const current = valid ? saved : (prefersLight ? 'light' : 'dark');
+
+  root.setAttribute('data-theme', current);
   syncThemeColor();
 
-  if (!btn) return;
-  btn.addEventListener('click', () => {
-    const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-    root.setAttribute('data-theme', next);
-    syncThemeColor();
-    try { localStorage.setItem('theme', next); } catch (e) { /* ignore */ }
+  if (!wrap || !btn || !menu) return;
+
+  menu.innerHTML = '<h4>Colour palette</h4>' + PALETTES.map(p => `
+    <button class="palette-opt" type="button" role="option" data-theme-id="${p.id}"
+            aria-selected="${p.id === current}">
+      <span class="palette-swatch" aria-hidden="true">
+        ${p.swatch.map(c => `<span style="background:${c}"></span>`).join('')}
+      </span>
+      <span class="palette-name">${p.name}<span class="palette-note">${p.note}</span></span>
+      <svg class="palette-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+    </button>`).join('');
+
+  const close = () => { wrap.classList.remove('open'); btn.setAttribute('aria-expanded', 'false'); };
+  const open = () => { wrap.classList.add('open'); btn.setAttribute('aria-expanded', 'true'); };
+
+  btn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    wrap.classList.contains('open') ? close() : open();
   });
 
+  menu.addEventListener('click', (e) => {
+    const opt = e.target.closest('[data-theme-id]');
+    if (!opt) return;
+    const id = opt.dataset.themeId;
+    root.setAttribute('data-theme', id);
+    menu.querySelectorAll('[data-theme-id]').forEach(o =>
+      o.setAttribute('aria-selected', String(o === opt)));
+    try { localStorage.setItem('theme', id); } catch (err) { /* ignore */ }
+    syncThemeColor();
+    close();
+  });
+
+  document.addEventListener('click', (e) => {
+    if (wrap.classList.contains('open') && !e.target.closest('#palette')) close();
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && wrap.classList.contains('open')) { close(); btn.focus(); }
+  });
+
+  /* The address-bar colour should follow the palette, so read it back from the
+     stylesheet rather than keeping a second copy of every background here. */
   function syncThemeColor() {
     const meta = document.querySelector('meta[name="theme-color"]');
-    if (meta) meta.setAttribute('content', root.getAttribute('data-theme') === 'light' ? '#F6F7FB' : '#07080D');
+    if (!meta) return;
+    const bg = getComputedStyle(root).getPropertyValue('--bg').trim();
+    if (bg) meta.setAttribute('content', bg);
   }
 }
 
@@ -266,9 +318,19 @@ function initParticles() {
     }));
   }
 
+  // Read the palette's particle colour from CSS rather than keeping a second
+  // copy per theme here. Cached because getComputedStyle every frame is costly.
+  let rgb = '129, 140, 248';
+  const readParticleColour = () => {
+    const v = getComputedStyle(document.documentElement).getPropertyValue('--particle').trim();
+    if (v) rgb = v;
+  };
+  readParticleColour();
+  new MutationObserver(readParticleColour).observe(document.documentElement, {
+    attributes: true, attributeFilter: ['data-theme']
+  });
+
   function frame() {
-    const light = document.documentElement.getAttribute('data-theme') === 'light';
-    const rgb = light ? '79, 70, 229' : '129, 140, 248';
     ctx.clearRect(0, 0, w, h);
 
     for (const p of particles) {

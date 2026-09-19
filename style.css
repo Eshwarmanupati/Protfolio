@@ -51,6 +51,13 @@
 
   --grid-line: rgba(255,255,255,.028);
   --code-bg: rgba(255,255,255,.025);
+
+  /* Ambient + canvas, so a palette can retint the background too */
+  --aurora-a: rgba(99,102,241,.55);
+  --aurora-b: rgba(139,92,246,.45);
+  --aurora-c: rgba(34,211,238,.26);
+  --particle: 129, 140, 248;      /* raw rgb channels — read by script.js */
+  --on-accent: #fff;              /* text that sits on --grad-btn */
 }
 
 [data-theme="light"] {
@@ -64,6 +71,15 @@
   --text:          #0B0E1A;
   --text-2:        #4A5268;
   --text-3:        #838BA1;
+
+  /* Darkened for legibility on a light ground — the :root values are tuned
+     for dark and wash out here. Used by the skill icons and code syntax. */
+  --violet:        #7C3AED;
+  --indigo:        #4F46E5;
+  --cyan:          #0891B2;
+  --emerald:       #059669;
+  --amber:         #B45309;
+  --rose:          #E11D48;
 
   --accent:        #5B5BD6;
   --accent-soft:   rgba(91, 91, 214, 0.1);
@@ -80,6 +96,184 @@
 
   --grid-line: rgba(15,23,42,.035);
   --code-bg: rgba(15,23,42,.03);
+
+  --aurora-a: rgba(79,70,229,.30);
+  --aurora-b: rgba(124,58,237,.24);
+  --aurora-c: rgba(8,145,178,.18);
+  --particle: 79, 70, 229;
+  --on-accent: #fff;
+}
+
+/* ── PALETTE: PAPER ─────────────────────────────────────
+   Warm editorial light. Cream stock, ink-brown type, terracotta accent —
+   reads like a printed journal rather than another white/indigo dashboard. */
+[data-theme="paper"] {
+  --bg:            #F3EDE1;
+  --bg-2:          #FFFCF5;
+  --surface:       rgba(255, 252, 245, 0.80);
+  --surface-2:     rgba(255, 252, 245, 0.96);
+  --border:        rgba(61, 46, 31, 0.14);
+  --border-strong: rgba(61, 46, 31, 0.26);
+
+  --text:          #221A11;
+  --text-2:        #55463A;
+  --text-3:        #8A7A69;
+  --violet:        #8A5A2B;
+  --indigo:        #A8431A;
+  --cyan:          #1C6F62;
+  --emerald:       #2E7247;
+  --amber:         #A65B0B;
+  --rose:          #A63232;
+
+  --accent:        #A8431A;
+  --accent-soft:   rgba(168, 67, 26, 0.12);
+  --accent-line:   rgba(168, 67, 26, 0.30);
+
+  --grad:          linear-gradient(115deg, #7B3310 0%, #A8431A 38%, #1C6F62 100%);
+  --grad-btn:      linear-gradient(135deg, #A8431A, #7B3310);
+  --grad-border:   linear-gradient(135deg, rgba(168,67,26,.42), rgba(28,111,98,.22), rgba(123,51,16,.36));
+
+  --shadow-1: 0 1px 2px rgba(61,46,31,.08);
+  --shadow-2: 0 14px 40px -20px rgba(61,46,31,.30);
+  --shadow-3: 0 30px 70px -34px rgba(61,46,31,.38);
+  --glow:     0 0 0 1px rgba(168,67,26,.18), 0 20px 50px -28px rgba(168,67,26,.5);
+
+  --grid-line: rgba(61,46,31,.05);
+  --code-bg:   rgba(61,46,31,.045);
+  --aurora-a:  rgba(168,67,26,.26);
+  --aurora-b:  rgba(197,122,20,.20);
+  --aurora-c:  rgba(28,111,98,.15);
+  --particle:  138, 90, 43;
+  --on-accent: #FFFCF5;
+}
+
+/* ── PALETTE: BLUEPRINT ─────────────────────────────────
+   Engineering drawing. Deep navy stock with a visible grid and cyan linework. */
+[data-theme="blueprint"] {
+  --bg:            #061527;
+  --bg-2:          #0A1F38;
+  --surface:       rgba(125, 211, 252, 0.05);
+  --surface-2:     rgba(125, 211, 252, 0.09);
+  --border:        rgba(125, 211, 252, 0.17);
+  --border-strong: rgba(125, 211, 252, 0.32);
+
+  --text:          #E8F3FF;
+  --text-2:        #9DBAD8;
+  --text-3:        #6A88AA;
+  --violet:        #A5B4FC;
+  --indigo:        #38BDF8;
+  --cyan:          #67E8F9;
+  --emerald:       #5EEAD4;
+  --amber:         #FCD34D;
+  --rose:          #FDA4AF;
+
+  --accent:        #38BDF8;
+  --accent-soft:   rgba(56, 189, 248, 0.14);
+  --accent-line:   rgba(56, 189, 248, 0.34);
+
+  --grad:          linear-gradient(100deg, #7DD3FC 0%, #E0F2FE 26%, #67E8F9 54%, #38BDF8 100%);
+  --grad-btn:      linear-gradient(135deg, #0369A1, #0EA5E9);
+  --grad-border:   linear-gradient(135deg, rgba(56,189,248,.6), rgba(103,232,249,.28), rgba(125,211,252,.5));
+
+  --shadow-1: 0 1px 2px rgba(0,0,0,.45);
+  --shadow-2: 0 14px 40px -18px rgba(0,0,0,.8);
+  --shadow-3: 0 30px 70px -30px rgba(0,0,0,.9);
+  --glow:     0 0 0 1px rgba(56,189,248,.28), 0 20px 60px -25px rgba(56,189,248,.55);
+
+  /* The grid is the point of this one, so it sits higher than elsewhere. */
+  --grid-line: rgba(125,211,252,.085);
+  --code-bg:   rgba(125,211,252,.05);
+  --aurora-a:  rgba(56,189,248,.34);
+  --aurora-b:  rgba(14,165,233,.26);
+  --aurora-c:  rgba(103,232,249,.18);
+  --particle:  125, 211, 252;
+  --on-accent: #F0F9FF;
+}
+
+/* ── PALETTE: CONSOLE ───────────────────────────────────
+   Terminal output. Near-black with lime and amber — pass and warn, which is
+   what a tester stares at all day. */
+[data-theme="console"] {
+  --bg:            #090C09;
+  --bg-2:          #0E130D;
+  --surface:       rgba(163, 230, 53, 0.045);
+  --surface-2:     rgba(163, 230, 53, 0.085);
+  --border:        rgba(163, 230, 53, 0.15);
+  --border-strong: rgba(163, 230, 53, 0.28);
+
+  --text:          #EAF3E3;
+  --text-2:        #A6B89C;
+  --text-3:        #718367;
+  --violet:        #D9F99D;
+  --indigo:        #A3E635;
+  --cyan:          #4ADE80;
+  --emerald:       #4ADE80;
+  --amber:         #FBBF24;
+  --rose:          #FB7185;
+
+  --accent:        #A3E635;
+  --accent-soft:   rgba(163, 230, 53, 0.12);
+  --accent-line:   rgba(163, 230, 53, 0.32);
+
+  --grad:          linear-gradient(100deg, #FBBF24 0%, #D9F99D 30%, #A3E635 58%, #4ADE80 100%);
+  --grad-btn:      linear-gradient(135deg, #3F6212, #65A30D);
+  --grad-border:   linear-gradient(135deg, rgba(163,230,53,.55), rgba(251,191,36,.28), rgba(74,222,128,.45));
+
+  --shadow-1: 0 1px 2px rgba(0,0,0,.5);
+  --shadow-2: 0 14px 40px -18px rgba(0,0,0,.85);
+  --shadow-3: 0 30px 70px -30px rgba(0,0,0,.92);
+  --glow:     0 0 0 1px rgba(163,230,53,.26), 0 20px 60px -25px rgba(163,230,53,.45);
+
+  --grid-line: rgba(163,230,53,.04);
+  --code-bg:   rgba(163,230,53,.045);
+  --aurora-a:  rgba(163,230,53,.26);
+  --aurora-b:  rgba(251,191,36,.18);
+  --aurora-c:  rgba(74,222,128,.18);
+  --particle:  163, 230, 53;
+  --on-accent: #F7FEE7;
+}
+
+/* ── PALETTE: INK ───────────────────────────────────────
+   Monochrome with one red. Everything is greyscale except what matters, which
+   makes the accent do real work instead of decorating. */
+[data-theme="ink"] {
+  --bg:            #08080A;
+  --bg-2:          #101014;
+  --surface:       rgba(255, 255, 255, 0.04);
+  --surface-2:     rgba(255, 255, 255, 0.075);
+  --border:        rgba(255, 255, 255, 0.12);
+  --border-strong: rgba(255, 255, 255, 0.22);
+
+  --text:          #FAFAFA;
+  --text-2:        #A6A6AD;
+  --text-3:        #6E6E77;
+  --violet:        #E4E4E7;
+  --indigo:        #FAFAFA;
+  --cyan:          #A1A1AA;
+  --emerald:       #D4D4D8;
+  --amber:         #FF8A7D;
+  --rose:          #FF453A;
+
+  --accent:        #FF453A;
+  --accent-soft:   rgba(255, 69, 58, 0.12);
+  --accent-line:   rgba(255, 69, 58, 0.34);
+
+  --grad:          linear-gradient(100deg, #FAFAFA 0%, #FF453A 46%, #FF9A90 68%, #FAFAFA 100%);
+  --grad-btn:      linear-gradient(135deg, #D92316, #FF453A);
+  --grad-border:   linear-gradient(135deg, rgba(255,69,58,.55), rgba(255,255,255,.22), rgba(255,69,58,.4));
+
+  --shadow-1: 0 1px 2px rgba(0,0,0,.5);
+  --shadow-2: 0 14px 40px -18px rgba(0,0,0,.85);
+  --shadow-3: 0 30px 70px -30px rgba(0,0,0,.95);
+  --glow:     0 0 0 1px rgba(255,69,58,.26), 0 20px 60px -25px rgba(255,69,58,.45);
+
+  --grid-line: rgba(255,255,255,.03);
+  --code-bg:   rgba(255,255,255,.035);
+  --aurora-a:  rgba(255,69,58,.24);
+  --aurora-b:  rgba(255,255,255,.06);
+  --aurora-c:  rgba(255,69,58,.13);
+  --particle:  190, 190, 198;
+  --on-accent: #FFF5F4;
 }
 
 /* ═══════════════════════════════════════════
@@ -117,7 +311,7 @@ img, svg { display: block; max-width: 100%; }
   border-radius: 6px;
 }
 
-::selection { background: rgba(99,102,241,.32); color: var(--text); }
+::selection { background: color-mix(in srgb, var(--accent) 32%, transparent); color: var(--text); }
 
 ::-webkit-scrollbar { width: 10px; }
 ::-webkit-scrollbar-track { background: var(--bg); }
@@ -178,9 +372,9 @@ img, svg { display: block; max-width: 100%; }
   filter: blur(110px); opacity: .5;
   will-change: transform;
 }
-.aurora-1 { width: 620px; height: 620px; top: -220px; left: -120px; background: radial-gradient(circle, rgba(99,102,241,.55), transparent 65%); animation: drift1 24s ease-in-out infinite; }
-.aurora-2 { width: 560px; height: 560px; top: 8%; right: -180px; background: radial-gradient(circle, rgba(139,92,246,.45), transparent 65%); animation: drift2 30s ease-in-out infinite; }
-.aurora-3 { width: 700px; height: 700px; bottom: -280px; left: 30%; background: radial-gradient(circle, rgba(34,211,238,.26), transparent 65%); animation: drift3 34s ease-in-out infinite; }
+.aurora-1 { width: 620px; height: 620px; top: -220px; left: -120px; background: radial-gradient(circle, var(--aurora-a), transparent 65%); animation: drift1 24s ease-in-out infinite; }
+.aurora-2 { width: 560px; height: 560px; top: 8%; right: -180px; background: radial-gradient(circle, var(--aurora-b), transparent 65%); animation: drift2 30s ease-in-out infinite; }
+.aurora-3 { width: 700px; height: 700px; bottom: -280px; left: 30%; background: radial-gradient(circle, var(--aurora-c), transparent 65%); animation: drift3 34s ease-in-out infinite; }
 [data-theme="light"] .aurora { opacity: .42; filter: blur(120px); }
 
 @keyframes drift1 { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(80px, 60px) scale(1.12); } }
@@ -215,7 +409,7 @@ img, svg { display: block; max-width: 100%; }
    6. SCROLL PROGRESS
    ═══════════════════════════════════════════ */
 .scroll-progress { position: fixed; top: 0; left: 0; right: 0; height: 2px; z-index: 1200; background: transparent; }
-.scroll-progress span { display: block; height: 100%; width: 0%; background: var(--grad); box-shadow: 0 0 14px rgba(99,102,241,.7); }
+.scroll-progress span { display: block; height: 100%; width: 0%; background: var(--grad); box-shadow: 0 0 14px color-mix(in srgb, var(--accent) 70%, transparent); }
 
 /* ═══════════════════════════════════════════
    7. NAV
@@ -239,7 +433,7 @@ img, svg { display: block; max-width: 100%; }
 .nav-logo-mark {
   display: grid; place-items: center; width: 30px; height: 30px;
   border-radius: 9px; background: var(--grad-btn); color: #fff;
-  font-weight: 800; font-size: .88rem; box-shadow: 0 6px 16px -6px rgba(99,102,241,.9);
+  font-weight: 800; font-size: .88rem; box-shadow: 0 6px 16px -6px color-mix(in srgb, var(--accent) 90%, transparent);
   transition: transform .4s var(--spring);
 }
 .nav-logo:hover .nav-logo-mark { transform: rotate(-8deg) scale(1.08); }
@@ -261,17 +455,7 @@ img, svg { display: block; max-width: 100%; }
 
 .nav-actions { display: flex; align-items: center; gap: 8px; margin-left: auto; }
 
-.theme-toggle {
-  display: grid; place-items: center; width: 36px; height: 36px;
-  border-radius: var(--r-full); border: 1px solid var(--border);
-  color: var(--text-2); background: var(--surface);
-  transition: color .25s, border-color .25s, transform .3s var(--spring), background .25s;
-}
-.theme-toggle:hover { color: var(--text); border-color: var(--border-strong); transform: rotate(18deg); }
-.theme-toggle .icon-sun { display: none; }
-.theme-toggle .icon-moon { display: block; }
-[data-theme="light"] .theme-toggle .icon-sun { display: block; }
-[data-theme="light"] .theme-toggle .icon-moon { display: none; }
+/* (theme-toggle replaced by the palette picker — see section 38) */
 
 .nav-toggle { display: none; flex-direction: column; gap: 5px; width: 38px; height: 36px; align-items: center; justify-content: center; border-radius: var(--r-full); border: 1px solid var(--border); }
 .nav-toggle span { display: block; width: 16px; height: 1.6px; border-radius: 2px; background: var(--text); transition: transform .3s var(--ease), opacity .2s; }
@@ -290,14 +474,14 @@ img, svg { display: block; max-width: 100%; }
   transition: transform .3s var(--spring), box-shadow .3s var(--ease), border-color .3s, background .3s, color .3s;
 }
 .btn-sm { padding: 9px 16px; font-size: .8rem; }
-.btn-primary { background: var(--grad-btn); color: #fff; box-shadow: 0 10px 26px -12px rgba(99,102,241,.9); }
+.btn-primary { background: var(--grad-btn); color: var(--on-accent); box-shadow: 0 10px 26px -12px color-mix(in srgb, var(--accent) 90%, transparent); }
 .btn-primary::after {
   content: ''; position: absolute; inset: 0;
   background: linear-gradient(120deg, transparent 20%, rgba(255,255,255,.34) 50%, transparent 80%);
   transform: translateX(-120%); transition: transform .7s var(--ease-out);
 }
 .btn-primary:hover::after { transform: translateX(120%); }
-.btn-primary:hover { box-shadow: 0 16px 36px -14px rgba(99,102,241,1); }
+.btn-primary:hover { box-shadow: 0 16px 36px -14px color-mix(in srgb, var(--accent) 100%, transparent); }
 .btn-ghost { background: var(--surface); color: var(--text); border: 1px solid var(--border); }
 .btn-ghost:hover { border-color: var(--accent-line); background: var(--surface-2); }
 .btn:active { transform: scale(.97); }
@@ -321,7 +505,7 @@ img, svg { display: block; max-width: 100%; }
 }
 .card::before {
   content: ''; position: absolute; inset: 0; border-radius: inherit;
-  background: radial-gradient(420px circle at var(--mx, 50%) var(--my, 0%), rgba(129,140,248,.14), transparent 62%);
+  background: radial-gradient(420px circle at var(--mx, 50%) var(--my, 0%), color-mix(in srgb, var(--accent) 15%, transparent), transparent 62%);
   opacity: 0; transition: opacity .4s var(--ease); pointer-events: none;
 }
 .card:hover::before { opacity: 1; }
@@ -432,7 +616,7 @@ img, svg { display: block; max-width: 100%; }
   display: grid; place-items: center; width: 46px; height: 46px; flex-shrink: 0;
   border-radius: 14px; background: var(--grad-btn); color: #fff;
   font-weight: 800; font-size: .95rem; letter-spacing: -.02em;
-  box-shadow: 0 10px 24px -12px rgba(99,102,241,1);
+  box-shadow: 0 10px 24px -12px color-mix(in srgb, var(--accent) 100%, transparent);
 }
 .snapshot-titles { min-width: 0; }
 .snapshot-head h2 { font-size: .98rem; font-weight: 700; letter-spacing: -.01em; }
@@ -512,14 +696,13 @@ img, svg { display: block; max-width: 100%; }
 .code-bar span { margin-left: 8px; font-family: 'JetBrains Mono', monospace; font-size: .74rem; color: var(--text-3); }
 .about-code pre { padding: 20px; overflow-x: auto; background: var(--code-bg); }
 .about-code code { font-family: 'JetBrains Mono', monospace; font-size: .8rem; line-height: 1.85; color: var(--text-2); }
-.c-key { color: #C084FC; } .c-var { color: #60A5FA; } .c-type { color: #22D3EE; }
-.c-prop { color: #F0ABFC; } .c-str { color: #6EE7B7; } .c-num { color: #FBBF24; } .c-cmt { color: var(--text-3); font-style: italic; }
-[data-theme="light"] .c-key { color: #7C3AED; }
-[data-theme="light"] .c-var { color: #2563EB; }
-[data-theme="light"] .c-type { color: #0891B2; }
-[data-theme="light"] .c-prop { color: #BE185D; }
-[data-theme="light"] .c-str { color: #047857; }
-[data-theme="light"] .c-num { color: #B45309; }
+.c-key  { color: var(--violet); }
+.c-var  { color: var(--indigo); }
+.c-type { color: var(--cyan); }
+.c-prop { color: var(--rose); }
+.c-str  { color: var(--emerald); }
+.c-num  { color: var(--amber); }
+.c-cmt  { color: var(--text-3); font-style: italic; }
 
 .about-copy p { color: var(--text-2); margin-bottom: 16px; font-size: 1rem; }
 .about-copy strong { color: var(--text); font-weight: 600; }
@@ -545,7 +728,7 @@ img, svg { display: block; max-width: 100%; }
 .timeline::after {
   content: ''; position: absolute; left: 9px; top: 6px; width: 2px; border-radius: 2px;
   height: var(--tl-progress, 0%); background: var(--grad);
-  box-shadow: 0 0 12px rgba(99,102,241,.6);
+  box-shadow: 0 0 12px color-mix(in srgb, var(--accent) 60%, transparent);
   transition: height .2s linear;
 }
 .tl-item { position: relative; }
@@ -589,18 +772,12 @@ img, svg { display: block; max-width: 100%; }
 }
 .skill-icon svg { width: 22px; height: 22px; }
 .skill-card:hover .skill-icon { transform: translateY(-4px) rotate(-6deg); }
-.i-violet  { background: rgba(139,92,246,.12); color: #A78BFA; }
-.i-indigo  { background: rgba(99,102,241,.12); color: #818CF8; }
-.i-cyan    { background: rgba(34,211,238,.12); color: #22D3EE; }
-.i-emerald { background: rgba(16,185,129,.12); color: #34D399; }
-.i-amber   { background: rgba(245,158,11,.12); color: #FBBF24; }
-.i-rose    { background: rgba(244,63,94,.12);  color: #FB7185; }
-[data-theme="light"] .i-violet  { color: #7C3AED; }
-[data-theme="light"] .i-indigo  { color: #4F46E5; }
-[data-theme="light"] .i-cyan    { color: #0891B2; }
-[data-theme="light"] .i-emerald { color: #059669; }
-[data-theme="light"] .i-amber   { color: #B45309; }
-[data-theme="light"] .i-rose    { color: #E11D48; }
+.i-violet  { background: color-mix(in srgb, var(--violet) 13%, transparent);  color: var(--violet); }
+.i-indigo  { background: color-mix(in srgb, var(--indigo) 13%, transparent);  color: var(--indigo); }
+.i-cyan    { background: color-mix(in srgb, var(--cyan) 13%, transparent);    color: var(--cyan); }
+.i-emerald { background: color-mix(in srgb, var(--emerald) 13%, transparent); color: var(--emerald); }
+.i-amber   { background: color-mix(in srgb, var(--amber) 13%, transparent);   color: var(--amber); }
+.i-rose    { background: color-mix(in srgb, var(--rose) 13%, transparent);    color: var(--rose); }
 
 .skill-card h3 { font-size: 1.05rem; font-weight: 700; letter-spacing: -.02em; }
 .skill-card p { margin: 7px 0 16px; font-size: .87rem; color: var(--text-3); }
@@ -613,7 +790,7 @@ img, svg { display: block; max-width: 100%; }
   position: relative; padding: 34px;
   display: flex; flex-direction: column; justify-content: space-between; gap: 30px;
   background:
-    radial-gradient(circle at 30% 20%, rgba(99,102,241,.22), transparent 60%),
+    radial-gradient(circle at 30% 20%, color-mix(in srgb, var(--accent) 22%, transparent), transparent 60%),
     radial-gradient(circle at 80% 80%, rgba(34,211,238,.14), transparent 55%),
     var(--surface-2);
   border-right: 1px solid var(--border);
@@ -629,7 +806,7 @@ img, svg { display: block; max-width: 100%; }
   padding: 6px 14px; border-radius: var(--r-full);
   background: var(--grad-btn); color: #fff;
   font-size: .72rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase;
-  box-shadow: 0 10px 24px -12px rgba(99,102,241,1);
+  box-shadow: 0 10px 24px -12px color-mix(in srgb, var(--accent) 100%, transparent);
 }
 .featured-glyph { position: relative; display: grid; place-items: center; flex: 1; color: var(--accent); opacity: .85; }
 .featured-glyph svg { width: 100px; height: 100px; animation: floaty 6s ease-in-out infinite; }
@@ -659,7 +836,7 @@ img, svg { display: block; max-width: 100%; }
   transition: color .25s, border-color .25s, background .25s, transform .25s var(--spring);
 }
 .filter:hover { color: var(--text); border-color: var(--accent-line); transform: translateY(-2px); }
-.filter.active { background: var(--grad-btn); color: #fff; border-color: transparent; box-shadow: 0 8px 22px -12px rgba(99,102,241,.9); }
+.filter.active { background: var(--grad-btn); color: var(--on-accent); border-color: transparent; box-shadow: 0 8px 22px -12px color-mix(in srgb, var(--accent) 90%, transparent); }
 
 .projects-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 18px; }
 .project { display: flex; flex-direction: column; padding: 24px; }
@@ -743,16 +920,16 @@ img, svg { display: block; max-width: 100%; }
 .contrib-grid::-webkit-scrollbar { height: 5px; }
 .gh-cell { width: 11px; height: 11px; border-radius: 2.5px; background: var(--surface-2); transition: transform .2s var(--spring); }
 .gh-cell:hover { transform: scale(1.4); }
-.gh-cell[data-level="1"] { background: rgba(99,102,241,.32); }
-.gh-cell[data-level="2"] { background: rgba(99,102,241,.55); }
-.gh-cell[data-level="3"] { background: rgba(99,102,241,.78); }
-.gh-cell[data-level="4"] { background: #818CF8; box-shadow: 0 0 8px rgba(129,140,248,.5); }
+.gh-cell[data-level="1"] { background: color-mix(in srgb, var(--accent) 26%, transparent); }
+.gh-cell[data-level="2"] { background: color-mix(in srgb, var(--accent) 46%, transparent); }
+.gh-cell[data-level="3"] { background: color-mix(in srgb, var(--accent) 68%, transparent); }
+.gh-cell[data-level="4"] { background: var(--accent); box-shadow: 0 0 8px color-mix(in srgb, var(--accent) 50%, transparent); }
 .contrib-legend { display: flex; align-items: center; gap: 5px; font-size: .72rem; color: var(--text-3); }
 .contrib-legend i { width: 11px; height: 11px; border-radius: 2.5px; background: var(--surface-2); }
-.contrib-legend i[data-level="1"] { background: rgba(99,102,241,.32); }
-.contrib-legend i[data-level="2"] { background: rgba(99,102,241,.55); }
-.contrib-legend i[data-level="3"] { background: rgba(99,102,241,.78); }
-.contrib-legend i[data-level="4"] { background: #818CF8; }
+.contrib-legend i[data-level="1"] { background: color-mix(in srgb, var(--accent) 26%, transparent); }
+.contrib-legend i[data-level="2"] { background: color-mix(in srgb, var(--accent) 46%, transparent); }
+.contrib-legend i[data-level="3"] { background: color-mix(in srgb, var(--accent) 68%, transparent); }
+.contrib-legend i[data-level="4"] { background: var(--accent); }
 
 /* ═══════════════════════════════════════════
    17. CERTIFICATIONS
@@ -800,7 +977,7 @@ img, svg { display: block; max-width: 100%; }
   font-size: .78rem; color: var(--text-2);
 }
 .edu-meta svg { width: 14px; height: 14px; color: var(--accent); }
-.edu-pill { color: var(--emerald) !important; border-color: rgba(16,185,129,.3) !important; background: rgba(16,185,129,.1) !important; font-weight: 600; }
+.edu-pill { color: var(--emerald) !important; border-color: color-mix(in srgb, var(--emerald) 30%, transparent) !important; background: color-mix(in srgb, var(--emerald) 10%, transparent) !important; font-weight: 600; }
 .edu-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 26px; padding-top: 24px; }
 .edu-cols h4 { font-size: .8rem; letter-spacing: .1em; text-transform: uppercase; color: var(--text-3); margin-bottom: 12px; }
 
@@ -1076,7 +1253,7 @@ main.page-enter { animation: pageUp .7s var(--ease-out) both; }
 .now-logo {
   width: 46px; height: 46px; flex-shrink: 0; border-radius: var(--r-md);
   display: grid; place-items: center; font-weight: 800; font-size: 1.05rem;
-  background: var(--grad-btn); color: #fff; box-shadow: var(--glow);
+  background: var(--grad-btn); color: var(--on-accent); box-shadow: var(--glow);
 }
 .now-titles { min-width: 0; flex: 1; }
 .now-titles h3 { font-size: 1.12rem; font-weight: 800; letter-spacing: -.02em; }
@@ -1084,7 +1261,7 @@ main.page-enter { animation: pageUp .7s var(--ease-out) both; }
 .badge-live {
   display: inline-flex; align-items: center; gap: 7px; flex-shrink: 0;
   padding: 7px 14px; border-radius: var(--r-full);
-  background: rgba(16,185,129,.12); border: 1px solid rgba(16,185,129,.32);
+  background: color-mix(in srgb, var(--emerald) 12%, transparent); border: 1px solid color-mix(in srgb, var(--emerald) 32%, transparent);
   color: var(--emerald); font-size: .74rem; font-weight: 700;
   letter-spacing: .08em; text-transform: uppercase;
 }
@@ -1126,9 +1303,9 @@ main.page-enter { animation: pageUp .7s var(--ease-out) both; }
   background: var(--grad-btn);
   transition: width 1.3s var(--ease-out);
 }
-.meter-fill.c-cyan { background: linear-gradient(135deg, #22D3EE, #6366F1); }
-.meter-fill.c-emerald { background: linear-gradient(135deg, #10B981, #22D3EE); }
-.meter-fill.c-amber { background: linear-gradient(135deg, #F59E0B, #F43F5E); }
+.meter-fill.c-cyan { background: linear-gradient(135deg, var(--cyan), var(--indigo)); }
+.meter-fill.c-emerald { background: linear-gradient(135deg, var(--emerald), var(--cyan)); }
+.meter-fill.c-amber { background: linear-gradient(135deg, var(--amber), var(--rose)); }
 
 /* ═══════════════════════════════════════════
    28. HOME TEASER CARDS
@@ -1422,7 +1599,7 @@ html[data-nav-dir="back"]::view-transition-new(root) { animation-name: pageInBac
   letter-spacing: .12em; text-transform: uppercase; font-weight: 600;
 }
 .hat-build .hat-tag { background: var(--accent-soft); color: var(--accent); border: 1px solid var(--accent-line); }
-.hat-break .hat-tag { background: rgba(244,63,94,.12); color: var(--rose); border: 1px solid rgba(244,63,94,.3); }
+.hat-break .hat-tag { background: color-mix(in srgb, var(--rose) 12%, transparent); color: var(--rose); border: 1px solid color-mix(in srgb, var(--rose) 30%, transparent); }
 .hat h3 { font-size: 1.32rem; font-weight: 800; letter-spacing: -.025em; }
 .hat p { font-size: .9rem; color: var(--text-2); }
 .hat ul { display: grid; gap: 9px; margin-top: 2px; }
@@ -1461,10 +1638,10 @@ html[data-nav-dir="back"]::view-transition-new(root) { animation-name: pageInBac
   font-size: .68rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
   border: 1px solid transparent; white-space: nowrap;
 }
-.sev-critical { background: rgba(244,63,94,.14);  color: var(--rose);    border-color: rgba(244,63,94,.32); }
-.sev-major    { background: rgba(245,158,11,.14); color: var(--amber);   border-color: rgba(245,158,11,.32); }
-.sev-minor    { background: rgba(34,211,238,.12); color: var(--cyan);    border-color: rgba(34,211,238,.3); }
-.sev-fixed    { background: rgba(16,185,129,.12); color: var(--emerald); border-color: rgba(16,185,129,.32); }
+.sev-critical { background: color-mix(in srgb, var(--rose) 14%, transparent); color: var(--rose); border-color: color-mix(in srgb, var(--rose) 32%, transparent); }
+.sev-major { background: color-mix(in srgb, var(--amber) 14%, transparent); color: var(--amber); border-color: color-mix(in srgb, var(--amber) 32%, transparent); }
+.sev-minor { background: color-mix(in srgb, var(--cyan) 14%, transparent); color: var(--cyan); border-color: color-mix(in srgb, var(--cyan) 32%, transparent); }
+.sev-fixed { background: color-mix(in srgb, var(--emerald) 14%, transparent); color: var(--emerald); border-color: color-mix(in srgb, var(--emerald) 32%, transparent); }
 
 .ticket-body { padding: 22px; display: grid; gap: 18px; }
 .ticket-field h4 {
@@ -1483,8 +1660,8 @@ html[data-nav-dir="back"]::view-transition-new(root) { animation-name: pageInBac
 }
 .ticket-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
 .ticket-expect, .ticket-actual { padding: 14px 16px; border-radius: var(--r-md); border: 1px solid var(--border); }
-.ticket-expect { background: rgba(16,185,129,.06); border-color: rgba(16,185,129,.22); }
-.ticket-actual { background: rgba(244,63,94,.06);  border-color: rgba(244,63,94,.22); }
+.ticket-expect { background: color-mix(in srgb, var(--emerald) 7%, transparent); border-color: color-mix(in srgb, var(--emerald) 22%, transparent); }
+.ticket-actual { background: color-mix(in srgb, var(--rose) 7%, transparent);  border-color: color-mix(in srgb, var(--rose) 22%, transparent); }
 
 /* Live environment block — fills itself from the visitor's own browser */
 .ticket-env {
@@ -1517,7 +1694,7 @@ html[data-nav-dir="back"]::view-transition-new(root) { animation-name: pageInBac
   display: grid; place-items: center;
   transition: background .25s var(--ease), border-color .25s var(--ease), transform .3s var(--spring);
 }
-.check-box svg { width: 12px; height: 12px; color: #fff; opacity: 0; transform: scale(.4); transition: all .25s var(--spring); }
+.check-box svg { width: 12px; height: 12px; color: var(--on-accent); opacity: 0; transform: scale(.4); transition: all .25s var(--spring); }
 .check-item.done .check-box { background: var(--grad-btn); border-color: transparent; transform: scale(1.06); }
 .check-item.done .check-box svg { opacity: 1; transform: none; }
 .check-item.done .check-text strong { text-decoration: line-through; color: var(--text-3); }
@@ -1575,3 +1752,56 @@ html[data-nav-dir="back"]::view-transition-new(root) { animation-name: pageInBac
 .rail-avatar.has-photo,
 .nav-logo-mark.has-photo { text-indent: -9999px; overflow: hidden; }
 .rail-avatar.has-photo::after { border-color: rgba(255,255,255,.45); }
+
+/* ═══════════════════════════════════════════
+   38. PALETTE PICKER
+   ═══════════════════════════════════════════ */
+.palette { position: relative; }
+.palette-btn {
+  display: grid; place-items: center; width: 36px; height: 36px;
+  border-radius: var(--r-full); border: 1px solid var(--border);
+  color: var(--text-2); background: var(--surface);
+  transition: color .25s var(--ease), border-color .25s var(--ease), background .25s var(--ease);
+}
+.palette-btn:hover, .palette-btn[aria-expanded="true"] { color: var(--text); border-color: var(--accent-line); }
+/* The swatch is the current accent, so the control shows the active palette. */
+.palette-btn i {
+  width: 15px; height: 15px; border-radius: 50%;
+  background: var(--grad-btn); box-shadow: inset 0 0 0 1px rgba(255,255,255,.28);
+}
+
+.palette-menu {
+  position: absolute; top: calc(100% + 12px); right: 0; z-index: 1200;
+  width: 232px; padding: 8px; border-radius: var(--r-lg);
+  background: color-mix(in srgb, var(--bg-2) 96%, transparent);
+  backdrop-filter: blur(22px); -webkit-backdrop-filter: blur(22px);
+  border: 1px solid var(--border); box-shadow: var(--shadow-3);
+  opacity: 0; visibility: hidden; transform: translateY(-8px) scale(.97);
+  transform-origin: top right;
+  transition: opacity .24s var(--ease-out), transform .24s var(--ease-out), visibility .24s;
+}
+.palette.open .palette-menu { opacity: 1; visibility: visible; transform: none; }
+.palette-menu h4 {
+  padding: 6px 10px 8px; font-family: 'JetBrains Mono', monospace;
+  font-size: .66rem; letter-spacing: .14em; text-transform: uppercase; color: var(--text-3);
+}
+.palette-opt {
+  display: flex; align-items: center; gap: 11px; width: 100%;
+  padding: 9px 10px; border-radius: var(--r-md); text-align: left;
+  transition: background .2s var(--ease);
+}
+.palette-opt:hover { background: var(--surface-2); }
+.palette-opt[aria-selected="true"] { background: var(--accent-soft); }
+.palette-swatch {
+  display: flex; flex-shrink: 0; width: 34px; height: 20px;
+  border-radius: 6px; overflow: hidden; border: 1px solid var(--border-strong);
+}
+.palette-swatch span { flex: 1; }
+.palette-name { font-size: .84rem; font-weight: 600; line-height: 1.25; }
+.palette-note { display: block; font-size: .72rem; color: var(--text-3); font-weight: 400; }
+.palette-check { margin-left: auto; width: 14px; height: 14px; color: var(--accent); opacity: 0; flex-shrink: 0; }
+.palette-opt[aria-selected="true"] .palette-check { opacity: 1; }
+
+@media (max-width: 760px) {
+  .palette-menu { width: 208px; }
+}

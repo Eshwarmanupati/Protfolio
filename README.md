@@ -36,7 +36,7 @@ If you change a nav link, change it in all seven files.
 - **Optional profile photo** — drop one file in and it appears everywhere; no HTML to edit
 - **"How I broke it"** — every project card opens to show what I tried, what failed and how I fixed it
 - **Live defect report** — the environment block on the quality page is filled in from the reader's own browser, which is exactly the data a developer needs to reproduce a bug
-- **Dark / light themes** — follows the system preference, remembers the visitor's choice
+- **Six colour palettes** — Midnight and Daylight (the originals), plus Paper, Blueprint, Console and Ink. Picked from a swatch menu in the nav, applied before first paint so nothing flashes, and remembered between visits
 - **Motion throughout** — character-by-character name reveal, word-by-word masked headings, typed roles, scroll reveals, count-ups, animated DSA rings, proficiency meters, parallax page numbers, magnetic buttons, 3D card tilt, spotlight hover, particle field
 - **Reading rail** — a slim minimap down the left margin where the "ME" monogram rides your scroll position, leaning and squashing with scroll direction and speed; the dots are clickable section jumps with hover labels
 - **Accessible** — skip link, keyboard focus styles, ARIA labels, and a full `prefers-reduced-motion` fallback that disables every animation
@@ -72,7 +72,8 @@ Opening `index.html` directly in a browser also works.
 | Where the photo appears | `AVATAR_SLOTS` in `script.js` |
 | A reading-rail dot's label | `data-rail="…"` on that `<section>` |
 | Stats, certifications, education | the matching section in `about.html` / `skills.html` |
-| Colours, spacing, radii | `:root` and `[data-theme="light"]` in `style.css` |
+| Colours, spacing, radii | `:root` and the `[data-theme="…"]` blocks in `style.css` |
+| Palette list in the menu | `PALETTES` in `script.js` |
 
 ### Animation hooks
 
@@ -116,6 +117,33 @@ Direction comes from `NAV_ORDER` in `script.js`: a click writes `fwd` or `back` 
 `sessionStorage`, and a small inline script in each page's `<head>` reads it onto
 `<html data-nav-dir>` before the first paint, because by the time `script.js` runs the transition
 has already chosen its animation.
+
+### Colour palettes
+
+Six, in `style.css` section 1: `dark` (Midnight), `light` (Daylight), `paper`, `blueprint`,
+`console` and `ink`. `:root` holds the dark values and each `[data-theme="…"]` block overrides
+the colour tokens only — spacing, radii and easing are inherited, so a palette is purely colour.
+
+To add one: copy a block, change the tokens, and add an entry to `PALETTES` in `script.js` with a
+three-colour swatch. Nothing else needs touching, because every component reads the tokens rather
+than a literal:
+
+- Skill icons, code syntax highlighting, severity badges and the meters all derive from the six
+  semantic tokens (`--violet`, `--indigo`, `--cyan`, `--emerald`, `--amber`, `--rose`) via
+  `color-mix()`. One palette block retints all of them.
+- The ambient blobs read `--aurora-a/b/c`, and the particle canvas reads `--particle` (raw
+  `r, g, b` channels) from CSS through a `MutationObserver` on `data-theme` — so the background
+  follows the palette without JavaScript holding a second copy of the colours.
+- `--on-accent` is the text colour that sits on `--grad-btn`. Set it per palette rather than
+  assuming white.
+
+The saved palette is applied by a small inline script in each page's `<head>`, before the
+stylesheet paints. Waiting for `script.js` means the default palette shows for a frame on every
+navigation.
+
+Contrast was checked for all six: body text lands between 14.7:1 and 19.2:1, secondary text
+between 7.3:1 and 9.3:1. `--text-3` sits at 3.2–5.0:1 — it is only used for small meta labels and
+matches what the original two themes already did, but do not promote it to body copy.
 
 ### Profile photo
 
