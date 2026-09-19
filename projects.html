@@ -23,6 +23,15 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="stylesheet" href="style.css" />
 
+  <script>
+    // Runs before first paint: the view transition reads data-nav-dir off <html>
+    // to decide which way the incoming page slides in.
+    try {
+      var d = sessionStorage.getItem('nav-dir');
+      if (d) document.documentElement.dataset.navDir = d;
+    } catch (e) { /* private mode */ }
+  </script>
+
 </head>
 <body>
 
@@ -76,7 +85,8 @@
         <a href="about.html">About</a>
         <a href="experience.html">Experience</a>
         <a href="projects.html">Projects</a>
-        <a href="skills.html">Skills &amp; DSA</a>
+        <a href="quality.html">Quality</a>
+        <a href="skills.html">Skills</a>
         <a href="contact.html">Contact</a>
       </div>
 
@@ -169,7 +179,7 @@
       <header class="section-head">
         <span class="section-kicker" data-anim="fade-up">All projects</span>
         <h2 class="section-title" data-anim="words" data-delay="60">Six applications, <span class="grad">built end to end</span></h2>
-        <p class="section-sub" data-anim="fade-up" data-delay="120">Filter by what you care about &mdash; every card links straight to the repository.</p>
+        <p class="section-sub" data-anim="fade-up" data-delay="120">Filter by what you care about. Every card links to the repository &mdash; and opens up to show the bug I found in my own work, and how I fixed it.</p>
       </header>
 
       <div class="filters" id="filters" data-anim="fade-up" role="tablist" aria-label="Project filters">
@@ -248,7 +258,7 @@
       </div>
       <nav class="footer-col" aria-label="Footer navigation">
         <h4>Explore</h4>
-        <a href="about.html">About</a><a href="experience.html">Experience</a><a href="projects.html">Projects</a><a href="skills.html">Skills &amp; DSA</a><a href="contact.html">Contact</a>
+        <a href="about.html">About</a><a href="experience.html">Experience</a><a href="projects.html">Projects</a><a href="quality.html">Quality</a><a href="skills.html">Skills</a><a href="contact.html">Contact</a>
       </nav>
       <div class="footer-col">
         <h4>For recruiters</h4>

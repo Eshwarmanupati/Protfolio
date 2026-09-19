@@ -3,17 +3,17 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Experience — Manupati Eshwar | Manual Test Engineer &amp; Developer Intern</title>
+  <title>Quality &amp; Testing — Manupati Eshwar | I build it, then I break it</title>
 
-  <meta name="description" content="Manupati Eshwar's experience: Manual Test Engineer &amp; Developer intern at Agiledigest Consulting Private Limited (remote, since March 2026), Java full stack training, and team and independent full stack projects." />
+  <meta name="description" content="How Manupati Eshwar tests software: the builder and breaker mindsets, the anatomy of a defect report with a live environment capture, and the pre-ship checklist run before any feature ships. Six months as a manual test engineer at Agiledigest Consulting." />
   <meta name="keywords" content="Manupati Eshwar, Full Stack Developer, Manual Testing, QA Engineer, MERN Stack, React, Node.js, TypeScript, AWS, DSA, SR University, 2027 batch, placement, SDE fresher" />
   <meta name="author" content="Manupati Eshwar" />
   <meta name="robots" content="index, follow" />
   <meta name="theme-color" content="#07080D" />
 
   <meta property="og:type" content="website" />
-  <meta property="og:title" content="Experience — Manupati Eshwar | Manual Test Engineer &amp; Developer Intern" />
-  <meta property="og:description" content="Manupati Eshwar's experience: Manual Test Engineer &amp; Developer intern at Agiledigest Consulting Private Limited (remote, since March 2026), Java full stack training, and team and independent full stack projects." />
+  <meta property="og:title" content="Quality &amp; Testing — Manupati Eshwar | I build it, then I break it" />
+  <meta property="og:description" content="How Manupati Eshwar tests software: the builder and breaker mindsets, the anatomy of a defect report with a live environment capture, and the pre-ship checklist run before any feature ships. Six months as a manual test engineer at Agiledigest Consulting." />
   <meta property="og:url" content="https://github.com/Eshwarmanupati" />
   <meta name="twitter:card" content="summary_large_image" />
 
@@ -110,182 +110,143 @@
   <!-- PAGE HERO -->
   <section class="page-hero">
     <div class="shell page-hero-inner">
-      <span class="page-hero-index" data-parallax="0.08" aria-hidden="true">02</span>
+      <span class="page-hero-index" data-parallax="0.08" aria-hidden="true">04</span>
       <nav class="crumbs" data-anim="fade-up" aria-label="Breadcrumb">
         <a href="index.html">Home</a>
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M9 6l6 6-6 6"/></svg>
-        <span>Experience</span>
+        <span>Quality</span>
       </nav>
-      <h1 data-anim="words" data-delay="60">Where I have <span class="grad">worked &amp; built</span></h1>
+      <h1 data-anim="words" data-delay="60">I build it, <span class="grad">then I break it</span></h1>
       <p class="page-hero-sub" data-anim="fade-up" data-delay="200">
-        A live remote internship in testing and development, an earlier Java full stack programme,
-        and the team and solo builds behind the repositories.
+        Most of my coursemates can build a feature. Six months of testing other people&rsquo;s code taught me
+        to find the ways it falls over first &mdash; which is the part that decides whether it survives contact
+        with real users.
       </p>
       <div class="page-hero-tags" data-anim="fade-up" data-delay="280">
-        <span class="chip"><i class="chip-dot"></i>Currently employed</span>
-        <span class="chip"><i class="chip-dot"></i>Remote</span>
-        <span class="chip"><i class="chip-dot"></i>QA + Development</span>
+        <span class="chip"><i class="chip-dot"></i>Developer + Manual QA</span>
+        <span class="chip"><i class="chip-dot"></i>6 months on the job</span>
+        <span class="chip"><i class="chip-dot"></i>Repro-first reporting</span>
       </div>
     </div>
   </section>
 
-  <!-- CURRENT ROLE -->
-  <section class="section" id="current">
+  <!-- TWO HATS -->
+  <section class="section" id="two-hats" data-rail="Two hats">
     <div class="shell">
       <header class="section-head">
-        <span class="section-kicker" data-anim="fade-up">01 &mdash; Current role</span>
-        <h2 class="section-title" data-anim="words" data-delay="60">Manual Test Engineer <span class="grad">&amp; Developer</span></h2>
-        <p class="section-sub" data-anim="fade-up" data-delay="120">My first industry role &mdash; six months in and continuing through final year.</p>
+        <span class="section-kicker" data-anim="fade-up">01 &mdash; The two hats</span>
+        <h2 class="section-title" data-anim="words" data-delay="60">The same feature, <span class="grad">twice</span></h2>
+        <p class="section-sub" data-anim="fade-up" data-delay="120">I write it wanting it to work. Then I come back wanting it to fail. The second pass is where the value is.</p>
       </header>
 
-      <article class="card now-card" data-anim="rise">
-        <div class="now-head">
-          <span class="now-logo">AD</span>
-          <div class="now-titles">
-            <h3>Manual Test Engineer &amp; Developer &mdash; Intern</h3>
-            <p>Agiledigest Consulting Private Limited &middot; Remote &middot; Mar 2026 &ndash; Present</p>
-          </div>
-          <span class="badge-live"><span class="pulse-dot"></span>Currently working</span>
+      <div class="card hats" data-anim="rise">
+        <div class="hat hat-build">
+          <span class="hat-tag">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+            Building
+          </span>
+          <h3>Make it work</h3>
+          <p>The optimistic pass. Model the data, write the endpoint, wire the screen, ship the happy path.</p>
+          <ul>
+            <li>What is the smallest thing that solves the user&rsquo;s problem?</li>
+            <li>What shape should the data be so the UI stays simple?</li>
+            <li>Which states does the screen actually need?</li>
+            <li>Does it read clearly enough for someone else to review?</li>
+          </ul>
         </div>
 
-        <div class="now-body">
-          <div class="now-facts">
-            <span class="now-fact"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 14"/></svg>Joined 23 March 2026 &middot; 6+ months</span>
-            <span class="now-fact"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>Fully remote</span>
-            <span class="now-fact"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/></svg>Dual role &mdash; QA and development</span>
-            <span class="now-fact"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>Continuing alongside final year</span>
-          </div>
+        <div class="hat-split" aria-hidden="true"><span>then</span></div>
 
-          <div class="now-cols">
-            <div>
-              <h4>Testing responsibilities</h4>
-              <ul class="now-list">
-                <li>Read requirements and turn them into manual test cases with clear pre-conditions and expected results.</li>
-                <li>Execute functional, regression, smoke and cross-browser passes ahead of each release.</li>
-                <li>Report defects with reproduction steps, severity, screenshots and environment details.</li>
-                <li>Retest fixes and confirm nothing nearby broke before a ticket is closed.</li>
-                <li>Verify API responses and database records so a passing UI is not hiding a bad payload.</li>
-              </ul>
-            </div>
-            <div>
-              <h4>Development responsibilities</h4>
-              <ul class="now-list qa">
-                <li>Pick up bug fixes on the issues I raise instead of only handing them off.</li>
-                <li>Build small features and UI changes against the team&rsquo;s existing codebase and conventions.</li>
-                <li>Work in a branch-based Git flow &mdash; feature branch, self-review, pull request.</li>
-                <li>Join daily stand-ups and sprint planning in an Agile cycle.</li>
-              </ul>
-            </div>
-          </div>
-
-          <div>
-            <h4 style="font-size:.74rem;letter-spacing:.14em;text-transform:uppercase;color:var(--text-3);margin-bottom:12px">Tools &amp; practices</h4>
-            <div class="tag-row"><span>Manual Testing</span><span>Test Case Design</span><span>Functional Testing</span><span>Regression Testing</span><span>Smoke Testing</span><span>Defect Reporting</span><span>SDLC / STLC</span><span>API Testing</span><span>SQL</span><span>Agile / Scrum</span><span>Git</span></div>
-          </div>
+        <div class="hat hat-break">
+          <span class="hat-tag">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M10.6 13.4a1 1 0 0 1 0-1.4l7-7 3.4 3.4-7 7a1 1 0 0 1-1.4 0z"/><path d="M3 21l6-6M2 12l4 4"/></svg>
+            Breaking
+          </span>
+          <h3>Make it fail</h3>
+          <p>The adversarial pass. Same feature, but now I am looking for the input nobody demoed.</p>
+          <ul>
+            <li>What happens on empty, on one item, on two thousand?</li>
+            <li>What if the network dies halfway through the request?</li>
+            <li>What if the same button is pressed twice, fast?</li>
+            <li>What does a user see when it breaks &mdash; a message, or a blank screen?</li>
+          </ul>
         </div>
-      </article>
+      </div>
 
-      <div class="strip" data-anim="fade-up" data-delay="80">
-        <div><div class="strip-value" data-count="6" data-suffix="+">0</div><div class="strip-label">Months in the role</div></div>
-        <div><div class="strip-value">Remote</div><div class="strip-label">Work mode</div></div>
-        <div><div class="strip-value">QA + Dev</div><div class="strip-label">Scope of work</div></div>
-        <div><div class="strip-value">Agile</div><div class="strip-label">Delivery process</div></div>
+      <div class="strip" data-anim="fade-up" data-delay="80" style="margin-top:22px">
+        <div><div class="strip-value" data-count="6" data-suffix="+">0</div><div class="strip-label">Months testing professionally</div></div>
+        <div><div class="strip-value">Repro</div><div class="strip-label">Every report, first</div></div>
+        <div><div class="strip-value">Dual</div><div class="strip-label">I fix what I find</div></div>
+        <div><div class="strip-value">Agile</div><div class="strip-label">Release cadence</div></div>
       </div>
     </div>
   </section>
 
-  <!-- TIMELINE -->
-  <section class="section" id="timeline-section">
+  <!-- ANATOMY OF A DEFECT REPORT -->
+  <section class="section" id="report" data-rail="Defect report" style="padding-top:0">
     <div class="shell">
       <header class="section-head">
-        <span class="section-kicker" data-anim="fade-up">02 &mdash; Timeline</span>
-        <h2 class="section-title" data-anim="words" data-delay="60">The road <span class="grad">so far</span></h2>
-        <p class="section-sub" data-anim="fade-up" data-delay="120">Training, team projects, and the work behind the repositories.</p>
+        <span class="section-kicker" data-anim="fade-up">02 &mdash; The craft</span>
+        <h2 class="section-title" data-anim="words" data-delay="60">Anatomy of a <span class="grad">defect report</span></h2>
+        <p class="section-sub" data-anim="fade-up" data-delay="120">
+          A bug a developer cannot reproduce is not a bug, it is an argument. This is the format I write
+          every day &mdash; pick a severity to see a real one.
+        </p>
       </header>
 
-      <ol class="timeline" id="timeline">
-        <li class="tl-item" data-anim="fade-up">
-          <span class="tl-node"></span>
-          <div class="tl-card card">
-            <div class="tl-top">
-              <div>
-                <h3>Manual Test Engineer &amp; Developer &mdash; Intern</h3>
-                <p class="tl-org">Agiledigest Consulting Private Limited &middot; Remote</p>
-              </div>
-              <span class="tl-date">Mar 2026 &mdash; Present</span>
-            </div>
-            <ul class="tl-points">
-              <li>Design and execute manual test cases across functional, regression and cross-browser passes.</li>
-              <li>Report and retest defects with reproduction steps, severity and evidence.</li>
-              <li>Fix bugs and build small features in the team codebase alongside the QA work.</li>
-              <li>Work an Agile cycle with stand-ups, sprint planning and branch-based Git.</li>
-            </ul>
-            <div class="tag-row"><span>Manual Testing</span><span>Regression</span><span>Defect Reporting</span><span>SDLC / STLC</span><span>Agile</span></div>
-          </div>
-        </li>
+      <div class="ticket-tabs" data-anim="fade-up" id="ticket-tabs" role="tablist" aria-label="Example defects">
+        <button class="filter active" data-ticket="0" role="tab" aria-selected="true">Critical &mdash; data loss</button>
+        <button class="filter" data-ticket="1" role="tab" aria-selected="false">Major &mdash; race condition</button>
+        <button class="filter" data-ticket="2" role="tab" aria-selected="false">Minor &mdash; empty state</button>
+      </div>
 
-        <li class="tl-item" data-anim="fade-up" data-delay="80">
-          <span class="tl-node"></span>
-          <div class="tl-card card">
-            <div class="tl-top">
-              <div>
-                <h3>Full Stack Developer &mdash; Mahayudh (Team Project)</h3>
-                <p class="tl-org">Hackathon build &middot; team of 3+ developers</p>
-              </div>
-              <span class="tl-date">2026</span>
-            </div>
-            <ul class="tl-points">
-              <li>Co-built a two-sided job and opportunity platform for students and recruiters.</li>
-              <li>Implemented role-based authentication separating student and recruiter permissions.</li>
-              <li>Shipped the job posting and application pipeline with real-time status updates.</li>
-              <li>Collaborated in a shared TypeScript codebase using branch-based Git workflow.</li>
-            </ul>
-            <div class="tag-row"><span>TypeScript</span><span>React</span><span>Node.js</span><span>MongoDB</span></div>
-          </div>
-        </li>
+      <article class="card ticket" id="ticket" data-anim="rise"></article>
 
-        <li class="tl-item" data-anim="fade-up" data-delay="160">
-          <span class="tl-node"></span>
-          <div class="tl-card card">
-            <div class="tl-top">
-              <div>
-                <h3>Independent Projects &mdash; Full Stack</h3>
-                <p class="tl-org">Self-directed &middot; 6 shipped applications</p>
-              </div>
-              <span class="tl-date">2024 &mdash; Present</span>
-            </div>
-            <ul class="tl-points">
-              <li>Designed and delivered Mini PayTM, Live Attendance, Credex, Prowider Mini, an LMS and a chat app.</li>
-              <li>Owned data modelling, REST API design, authentication and responsive front ends on each.</li>
-              <li>Maintain 21+ public repositories with documented, reviewable source code.</li>
-            </ul>
-            <div class="tag-row"><span>MERN</span><span>REST APIs</span><span>Auth</span><span>Git</span></div>
-          </div>
-        </li>
+      <p class="dsa-note" data-anim="fade-up" style="text-align:left;margin-top:16px">
+        The environment block above is filled in live from <strong>your</strong> browser as you read this &mdash;
+        that is the information a developer needs before they can reproduce anything.
+      </p>
+    </div>
+  </section>
 
-        <li class="tl-item" data-anim="fade-up" data-delay="240">
-          <span class="tl-node"></span>
-          <div class="tl-card card">
-            <div class="tl-top">
-              <div>
-                <h3>Java Full Stack Development &mdash; Internship / Training</h3>
-                <p class="tl-org">Industry training programme</p>
-              </div>
-              <span class="tl-date">2024</span>
-            </div>
-            <ul class="tl-points">
-              <li>Completed a structured Java full stack programme covering Spring Boot, Hibernate and MySQL.</li>
-              <li>Built CRUD-driven web modules with server-side validation and relational schema design.</li>
-              <li>Practised MVC layering, REST endpoints and Bootstrap-based responsive interfaces.</li>
-            </ul>
-            <div class="tag-row"><span>Java</span><span>Spring Boot</span><span>Hibernate</span><span>MySQL</span><span>Bootstrap</span></div>
+  <!-- PRE-SHIP CHECKLIST -->
+  <section class="section" id="checklist" data-rail="Pre-ship checks" style="padding-top:0">
+    <div class="shell">
+      <header class="section-head">
+        <span class="section-kicker" data-anim="fade-up">03 &mdash; Before I say done</span>
+        <h2 class="section-title" data-anim="words" data-delay="60">The pass I run on <span class="grad">my own code</span></h2>
+        <p class="section-sub" data-anim="fade-up" data-delay="120">Tick through it &mdash; this is the list I walk before a feature leaves my machine.</p>
+      </header>
+
+      <div class="dsa-grid">
+        <div class="card checklist" data-anim="fade-right">
+          <h3 class="card-heading">Pre-ship checklist</h3>
+          <div id="check-list"></div>
+          <div class="check-foot">
+            <span class="check-count"><b id="check-done">0</b> / <span id="check-total">0</span> checked</span>
+            <button class="btn btn-sm btn-ghost magnetic" id="check-reset" type="button">Reset</button>
           </div>
-        </li>
-      </ol>
+        </div>
+
+        <div class="dsa-side">
+          <div class="card qa-card" data-anim="fade-left">
+            <h4>Why a checklist and not just care</h4>
+            <p>Care does not survive a deadline. A list does. The same three things break every project &mdash; empty states, double submits and the error path nobody rendered &mdash; so I stopped trusting myself to remember them.</p>
+          </div>
+          <div class="card qa-card" data-anim="fade-left" data-delay="60">
+            <h4>What this changed in my code</h4>
+            <p>Smaller units, because a big one is hard to test. Explicit states instead of implicit ones. And error messages written for the person reading them, not for the log file.</p>
+          </div>
+          <div class="card qa-card" data-anim="fade-left" data-delay="120">
+            <h4>Where I want to take it</h4>
+            <p>Manual testing is where I started, not where I am stopping. Automation next &mdash; Selenium and API test suites &mdash; so the regression pass runs without me.</p>
+          </div>
+        </div>
+      </div>
 
       <div class="section-cta" data-anim="fade-up">
         <a href="projects.html" class="btn btn-primary magnetic">
-          Next: Projects
+          See what I broke in my own projects
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
         </a>
       </div>

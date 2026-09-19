@@ -29,7 +29,10 @@ document.addEventListener('DOMContentLoaded', () => {
   initSpotlight();
   initTilt();
   initMagnetic();
+  initBrokePanels();
   initFilters();
+  initTickets();
+  initChecklist();
   initContactForm();
   initToTop();
 
@@ -83,8 +86,55 @@ function initLoader() {
 
 
 /* ── PAGE TRANSITIONS ──────────────────────────────────── */
+/* Cross-document view transitions need the @view-transition at-rule, not just
+   the same-document startViewTransition() that shipped earlier. CSSViewTransitionRule
+   is the interface that at-rule exposes, so its presence is the honest test. */
+const SUPPORTS_MPA_VIEW_TRANSITIONS =
+  typeof window.CSSViewTransitionRule === 'function' &&
+  CSS.supports('view-transition-name', 'a');
+
+/* Remember which way through the nav the visitor is travelling, so the next
+   document can animate in from the correct side. The incoming page reads this
+   back from sessionStorage in a tiny inline script before it paints. */
+const NAV_ORDER = ['index.html', 'about.html', 'experience.html', 'projects.html', 'quality.html', 'skills.html', 'contact.html'];
+
+function initNavDirection() {
+  const fileOf = (path) => (path.split('/').pop() || 'index.html').toLowerCase();
+  const here = NAV_ORDER.indexOf(fileOf(location.pathname));
+
+  document.addEventListener('click', (e) => {
+    if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
+    const a = e.target.closest('a[href]');
+    if (!a || a.target === '_blank') return;
+    let dest;
+    try { dest = new URL(a.href, location.href); } catch (err) { return; }
+    if (dest.origin !== location.origin) return;
+
+    const there = NAV_ORDER.indexOf(fileOf(dest.pathname));
+    let dir = '';
+    if (here > -1 && there > -1 && here !== there) dir = there > here ? 'fwd' : 'back';
+    try { sessionStorage.setItem('nav-dir', dir); } catch (err) { /* private mode */ }
+    document.documentElement.dataset.navDir = dir;
+  }, true);
+
+  // A browser Back/Forward press is always a reversal of the stored direction.
+  window.addEventListener('popstate', () => {
+    try { sessionStorage.setItem('nav-dir', 'back'); } catch (err) { /* ignore */ }
+  });
+}
+
+
 function initPageTransitions() {
   const main = document.querySelector('main');
+
+  // Where the browser can morph between documents natively, let it: drop the
+  // curtain and the entry slide so the two systems never run at once.
+  if (SUPPORTS_MPA_VIEW_TRANSITIONS) {
+    document.getElementById('page-fx')?.remove();
+    initNavDirection();
+    return;
+  }
+
   if (main && !REDUCED) main.classList.add('page-enter');
   if (REDUCED) return;
 
@@ -586,6 +636,11 @@ const PROJECTS = [
       'Search and send money to any registered user'
     ],
     tech: ['JavaScript', 'Node.js', 'Express', 'MongoDB'],
+    broke: {
+      found: 'Sent money to myself, then pressed transfer twice on a slow connection.',
+      failed: 'The balance check and the debit were two separate steps, so a fast second request could read a stale balance and overdraw the account.',
+      fixed: 'Moved the balance check and both updates into a single atomic transaction, and disabled the button until the response landed.'
+    },
     repo: 'https://github.com/Eshwarmanupati/Mini-payTm',
     icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="1" y="4" width="22" height="16" rx="3"/><line x1="1" y1="10" x2="23" y2="10"/></svg>'
   },
@@ -600,6 +655,11 @@ const PROJECTS = [
       'Automated attendance summaries per student'
     ],
     tech: ['JavaScript', 'Node.js', 'Real-time', 'MongoDB'],
+    broke: {
+      found: 'Opened the same session in two tabs and marked attendance in both.',
+      failed: 'The second tab wrote a duplicate record for the same student and session, inflating the report.',
+      fixed: 'Made the student-plus-session pair unique at the database level, so the duplicate is rejected instead of trusted.'
+    },
     repo: 'https://github.com/Eshwarmanupati/Live-Attendence-Platform',
     icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>'
   },
@@ -614,6 +674,11 @@ const PROJECTS = [
       'Structured for adding new financial products'
     ],
     tech: ['TypeScript', 'Node.js', 'Finance'],
+    broke: {
+      found: 'Passed a zero and then a negative number into the repayment calculation.',
+      failed: 'The schedule came back with NaN instalments and rendered as blank rows instead of an error.',
+      fixed: 'Validated the range at the API boundary and returned a typed error the UI renders as a real message.'
+    },
     repo: 'https://github.com/Eshwarmanupati/Credex',
     icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>'
   },
@@ -628,6 +693,11 @@ const PROJECTS = [
       'Progress tracking on a student dashboard'
     ],
     tech: ['JavaScript', 'Node.js', 'MongoDB'],
+    broke: {
+      found: 'Pasted an instructor-only course URL while logged in as a student.',
+      failed: 'The page was hidden from the student navigation but the route itself still returned the data.',
+      fixed: 'Moved the role check onto the server route, so the UI is no longer the only thing enforcing permissions.'
+    },
     repo: 'https://github.com/Eshwarmanupati/sesd-lms',
     icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>'
   },
@@ -642,6 +712,11 @@ const PROJECTS = [
       'Responsive chat UI for mobile and desktop'
     ],
     tech: ['JavaScript', 'Node.js', 'WebSockets'],
+    broke: {
+      found: 'Pulled the network cable mid-conversation and kept typing.',
+      failed: 'Messages appeared as sent, but were never delivered — the UI was optimistic with no reconciliation.',
+      fixed: 'Added a pending state and a delivery confirmation, so an unsent message is visibly unsent.'
+    },
     repo: 'https://github.com/Eshwarmanupati/chat-app',
     icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>'
   },
@@ -656,6 +731,11 @@ const PROJECTS = [
       'Typed API layer for predictable contracts'
     ],
     tech: ['TypeScript', 'Node.js', 'Platform'],
+    broke: {
+      found: 'Searched for a provider with an apostrophe and an emoji in the name.',
+      failed: 'The query broke the listing and returned an empty result rather than a match.',
+      fixed: 'Escaped and normalised the search input, and gave the empty result its own explanatory state.'
+    },
     repo: 'https://github.com/Eshwarmanupati?tab=repositories',
     icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>'
   }
@@ -675,6 +755,22 @@ function renderProjects() {
       <p class="project-desc">${p.desc}</p>
       <ul class="project-points">${p.points.map(x => `<li>${x}</li>`).join('')}</ul>
       <div class="tag-row">${p.tech.map(t => `<span>${t}</span>`).join('')}</div>
+      ${p.broke ? `
+      <div class="broke">
+        <button class="broke-toggle" type="button" aria-expanded="false">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M10.6 13.4a1 1 0 0 1 0-1.4l7-7 3.4 3.4-7 7a1 1 0 0 1-1.4 0z"/><path d="M3 21l6-6M2 12l4 4"/></svg>
+          How I broke it
+          <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="broke-panel"><div class="broke-inner">
+          <div class="broke-rows">
+            <div class="broke-row"><b>What I tried</b><span>${p.broke.found}</span></div>
+            <div class="broke-row"><b>What failed</b><span>${p.broke.failed}</span></div>
+            <div class="broke-row fix"><b>The fix</b><span>${p.broke.fixed}</span></div>
+          </div>
+        </div></div>
+      </div>` : ''}
+
       <div class="project-foot">
         <a class="project-link" href="${p.repo}" target="_blank" rel="noopener noreferrer">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
@@ -687,6 +783,19 @@ function renderProjects() {
 
 
 /* ── PROJECT FILTERS ───────────────────────────────────── */
+function initBrokePanels() {
+  const grid = document.getElementById('projects-grid');
+  if (!grid) return;
+  grid.addEventListener('click', (e) => {
+    const btn = e.target.closest('.broke-toggle');
+    if (!btn) return;
+    const box = btn.closest('.broke');
+    const open = box.classList.toggle('open');
+    btn.setAttribute('aria-expanded', String(open));
+  });
+}
+
+
 function initFilters() {
   const bar = document.getElementById('filters');
   const grid = document.getElementById('projects-grid');
@@ -879,6 +988,210 @@ function initMagnetic() {
       el.style.transform = `translate(${x * 0.16}px, ${y * 0.22}px)`;
     });
     el.addEventListener('pointerleave', () => { el.style.transform = ''; });
+  });
+}
+
+
+/* ── DEFECT TICKETS (quality page) ─────────────────────── */
+/* NOTE for Eshwar: these three are written from the kinds of defects this work
+   turns up. Swap in real ones from your own Agiledigest tickets when you can —
+   a specific true bug reads far better than a plausible one. */
+const TICKETS = [
+  {
+    id: 'BUG-1042',
+    title: 'Draft is silently discarded when the session expires mid-edit',
+    sev: 'critical', sevLabel: 'Critical',
+    summary: 'A user typing a long entry loses everything if their token expires before they submit. No warning, no recovery — the form posts, the API returns 401 and the page redirects to login with the content gone.',
+    steps: [
+      'Log in and open a form with a long text field.',
+      'Leave the tab idle until the session token expires (~30 min).',
+      'Return, finish typing and press Submit.'
+    ],
+    expected: 'The user is warned before the session lapses, or the draft survives re-authentication.',
+    actual: 'Redirect to the login screen. All entered content is lost with no message.',
+    impact: 'Data loss with no recovery path. Highest-severity class of defect — it destroys work the user already did.'
+  },
+  {
+    id: 'BUG-0977',
+    title: 'Double-submit creates duplicate records',
+    sev: 'major', sevLabel: 'Major',
+    summary: 'The submit button stays enabled while the request is in flight. An impatient second click on a slow connection fires the request twice and two records are written.',
+    steps: [
+      'Throttle the network to a slow connection.',
+      'Fill the create form and press Submit.',
+      'Press Submit again before the first response returns.'
+    ],
+    expected: 'The button disables on first press; the second click does nothing. One record is created.',
+    actual: 'Two identical records are created, each with its own id.',
+    impact: 'Corrupts the data set and any count built on it. Found by being impatient on purpose — the fastest way to surface a race.'
+  },
+  {
+    id: 'BUG-0891',
+    title: 'Empty list renders as a blank panel with no explanation',
+    sev: 'minor', sevLabel: 'Minor',
+    summary: 'A new user with no records sees an empty bordered box. Nothing tells them the list is empty rather than broken, and nothing points at how to add the first item.',
+    steps: [
+      'Create a fresh account with no records.',
+      'Open the list view.'
+    ],
+    expected: 'An empty state explaining there is nothing yet, with the action to create the first record.',
+    actual: 'A blank panel. Indistinguishable from a failed load.',
+    impact: 'Low severity, high frequency — it is every user’s first impression of the product.'
+  }
+];
+
+function initTickets() {
+  const host = document.getElementById('ticket');
+  const tabs = document.getElementById('ticket-tabs');
+  if (!host || !tabs) return;
+
+  const esc = (t) => String(t).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+
+  // The environment block is the point of the whole section: it is read off the
+  // visitor's own browser, which is exactly the data a developer needs to repro.
+  function environment() {
+    const d = new Date();
+    const rows = [
+      ['Browser', browserName()],
+      ['Platform', navigator.platform || 'unknown'],
+      ['Viewport', window.innerWidth + ' × ' + window.innerHeight + ' px'],
+      ['Screen', screen.width + ' × ' + screen.height + ' @ ' + (window.devicePixelRatio || 1) + 'x'],
+      ['Theme', document.documentElement.getAttribute('data-theme')],
+      ['Language', navigator.language || 'unknown'],
+      ['Reduced motion', REDUCED ? 'on' : 'off'],
+      ['Observed at', d.toISOString().slice(0, 16).replace('T', ' ') + ' UTC']
+    ];
+    return rows.map(([k, v]) => `<div><b>${esc(k)}</b>${esc(v)}</div>`).join('');
+  }
+
+  function browserName() {
+    const ua = navigator.userAgent;
+    if (/Edg\//.test(ua)) return 'Edge ' + (ua.match(/Edg\/(\d+)/) || [])[1];
+    if (/Firefox\//.test(ua)) return 'Firefox ' + (ua.match(/Firefox\/(\d+)/) || [])[1];
+    if (/Chrome\//.test(ua)) return 'Chrome ' + (ua.match(/Chrome\/(\d+)/) || [])[1];
+    if (/Safari\//.test(ua)) return 'Safari ' + (ua.match(/Version\/(\d+)/) || [])[1];
+    return 'Unknown';
+  }
+
+  function render(i) {
+    const t = TICKETS[i];
+    host.innerHTML = `
+      <div class="ticket-head">
+        <span class="ticket-id">${esc(t.id)}</span>
+        <span class="ticket-title">${esc(t.title)}</span>
+        <span class="sev sev-${t.sev}">${esc(t.sevLabel)}</span>
+        <span class="sev sev-fixed">Fixed &amp; retested</span>
+      </div>
+      <div class="ticket-body">
+        <div class="ticket-field">
+          <h4>Summary</h4>
+          <p>${esc(t.summary)}</p>
+        </div>
+        <div class="ticket-field">
+          <h4>Steps to reproduce</h4>
+          <ol class="ticket-steps">${t.steps.map(x => `<li>${esc(x)}</li>`).join('')}</ol>
+        </div>
+        <div class="ticket-cols">
+          <div class="ticket-expect ticket-field">
+            <h4>Expected result</h4>
+            <p>${esc(t.expected)}</p>
+          </div>
+          <div class="ticket-actual ticket-field">
+            <h4>Actual result</h4>
+            <p>${esc(t.actual)}</p>
+          </div>
+        </div>
+        <div class="ticket-field">
+          <h4>Why the severity</h4>
+          <p>${esc(t.impact)}</p>
+        </div>
+      </div>
+      <div class="ticket-env">
+        <span class="env-live"><span class="pulse-dot"></span>Environment — captured live from your browser</span>
+        <div class="env-grid">${environment()}</div>
+      </div>`;
+  }
+
+  tabs.addEventListener('click', (e) => {
+    const btn = e.target.closest('[data-ticket]');
+    if (!btn) return;
+    tabs.querySelectorAll('[data-ticket]').forEach(b => {
+      const on = b === btn;
+      b.classList.toggle('active', on);
+      b.setAttribute('aria-selected', String(on));
+    });
+    render(+btn.dataset.ticket);
+  });
+
+  render(0);
+  // Keep the viewport row honest if the window is resized while reading.
+  window.addEventListener('resize', debounce(() => {
+    const grid = host.querySelector('.env-grid');
+    if (grid) grid.innerHTML = environment();
+  }, 250));
+}
+
+
+/* ── PRE-SHIP CHECKLIST (quality page) ─────────────────── */
+const CHECKS = [
+  ['Empty state', 'Zero records, zero results, zero notifications — every list has a first day.'],
+  ['Boundary values', 'One item, two thousand items, the longest name a real person could have.'],
+  ['Double submit', 'Press it twice, fast, on a throttled connection. Does it write two rows?'],
+  ['Network failure', 'Kill the request mid-flight. Does the user see a message or a frozen screen?'],
+  ['Unauthorised access', 'Paste another role’s URL. Does the server say no, or only the UI?'],
+  ['Input validation', 'Leading spaces, emoji, SQL-ish strings, a 500-character name.'],
+  ['Back button', 'Navigate away mid-flow and return. Is the state still coherent?'],
+  ['Small screen', 'Everything at 360px wide, with the keyboard open over the form.'],
+  ['Keyboard only', 'Tab through the whole flow. Can it be completed without a mouse?'],
+  ['Refresh mid-flow', 'Reload halfway through. Does it resume, restart, or corrupt?']
+];
+
+function initChecklist() {
+  const host = document.getElementById('check-list');
+  if (!host) return;
+  const doneEl = document.getElementById('check-done');
+  const totalEl = document.getElementById('check-total');
+  const reset = document.getElementById('check-reset');
+
+  host.innerHTML = CHECKS.map(([title, note], i) => `
+    <div class="check-item" role="checkbox" tabindex="0" aria-checked="false" data-i="${i}">
+      <span class="check-box">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+      </span>
+      <span class="check-text"><strong>${title}</strong><span>${note}</span></span>
+    </div>`).join('');
+
+  if (totalEl) totalEl.textContent = CHECKS.length;
+
+  const count = () => {
+    const n = host.querySelectorAll('.check-item.done').length;
+    if (doneEl) doneEl.textContent = n;
+  };
+
+  const toggle = (item) => {
+    const on = item.classList.toggle('done');
+    item.setAttribute('aria-checked', String(on));
+    count();
+  };
+
+  host.addEventListener('click', (e) => {
+    const item = e.target.closest('.check-item');
+    if (item) toggle(item);
+  });
+  host.addEventListener('keydown', (e) => {
+    if (e.key !== ' ' && e.key !== 'Enter') return;
+    const item = e.target.closest('.check-item');
+    if (!item) return;
+    e.preventDefault();
+    toggle(item);
+  });
+
+  reset?.addEventListener('click', () => {
+    host.querySelectorAll('.check-item.done').forEach(i => {
+      i.classList.remove('done');
+      i.setAttribute('aria-checked', 'false');
+    });
+    count();
   });
 }
 
