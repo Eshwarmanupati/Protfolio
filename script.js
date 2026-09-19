@@ -7,7 +7,9 @@ const REDUCED = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 document.addEventListener('DOMContentLoaded', () => {
   initTheme();
+  initAvatar();
   initLoader();
+  initPageFlow();
   initPageTransitions();
   initCursor();
   initParticles();
@@ -64,6 +66,51 @@ function initTheme() {
     const meta = document.querySelector('meta[name="theme-color"]');
     if (meta) meta.setAttribute('content', root.getAttribute('data-theme') === 'light' ? '#F6F7FB' : '#07080D');
   }
+}
+
+
+/* ── PROFILE PHOTO ─────────────────────────────────────── */
+/* There is no server to upload to on a static site, so the photo is a file you
+   drop in: put a square image at assets/avatar.jpg (or .png / .webp) and it
+   appears in the nav mark, the recruiter snapshot and the reading rail.
+   Nothing to edit in seven HTML files. Probed with an Image() so a missing
+   file never flashes a broken icon. */
+const AVATAR_CANDIDATES = ['assets/avatar.jpg', 'assets/avatar.png', 'assets/avatar.webp'];
+
+/* Where the photo is used. Drop a selector from this list to keep the monogram
+   in that spot — e.g. remove '.nav-logo-mark' to keep the lettermark in the nav. */
+const AVATAR_SLOTS = '.snapshot-avatar, .rail-avatar, .nav-logo-mark';
+
+function initAvatar() {
+  const slots = document.querySelectorAll(AVATAR_SLOTS);
+  if (!slots.length) return;
+
+  const tryNext = (i) => {
+    if (i >= AVATAR_CANDIDATES.length) return;      // no photo yet — monogram stays
+    const src = AVATAR_CANDIDATES[i];
+    const probe = new Image();
+    probe.onload = () => {
+      document.documentElement.style.setProperty('--avatar', `url("${src}")`);
+      slots.forEach(el => el.classList.add('has-photo'));
+    };
+    probe.onerror = () => tryNext(i + 1);
+    probe.src = src;
+  };
+  tryNext(0);
+}
+
+
+/* ── PAGE-CHANGE FLOW ──────────────────────────────────── */
+/* The sweep bar is injected rather than shipped in the markup so it only ever
+   appears when motion is wanted. */
+function initPageFlow() {
+  if (REDUCED) return;
+  const bar = document.createElement('div');
+  bar.className = 'page-flow';
+  bar.setAttribute('aria-hidden', 'true');
+  bar.innerHTML = '<i></i>';
+  document.body.appendChild(bar);
+  setTimeout(() => bar.remove(), 1400);
 }
 
 

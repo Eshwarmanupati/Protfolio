@@ -32,7 +32,8 @@ If you change a nav link, change it in all seven files.
 ## Highlights
 
 - **Recruiter-first hero** — availability, current role, target roles, graduation year and key metrics visible without scrolling
-- **Native cross-document view transitions** — the browser morphs between pages, with the nav, footer and reading rail held in place; direction-aware, so moving right through the nav pushes content left and going back reverses it. Browsers without the API fall back to a JS curtain wipe
+- **Animated page-change flow** — a glowing bar races across the top on arrival, the content is revealed by an angled wipe rather than a fade, and the page heading and its big outline number carry across documents so the eye follows one element. Direction-aware: rightward through the nav pushes content left, back reverses it. Browsers without view transitions fall back to a JS curtain wipe and keep the flow bar
+- **Optional profile photo** — drop one file in and it appears everywhere; no HTML to edit
 - **"How I broke it"** — every project card opens to show what I tried, what failed and how I fixed it
 - **Live defect report** — the environment block on the quality page is filled in from the reader's own browser, which is exactly the data a developer needs to reproduce a bug
 - **Dark / light themes** — follows the system preference, remembers the visitor's choice
@@ -67,7 +68,8 @@ Opening `index.html` directly in a browser also works.
 | Example defect reports | `TICKETS` array in `script.js` |
 | Pre-ship checklist | `CHECKS` array in `script.js` |
 | A project's "How I broke it" | the `broke: { found, failed, fixed }` object on that project in `PROJECTS` |
-| Reading-rail avatar | `.rail-avatar` in each page — replace the `ME` text with `<img src="assets/avatar.jpg" alt="" />` for a photo |
+| Profile photo | drop a square image at `assets/avatar.jpg` — see below |
+| Where the photo appears | `AVATAR_SLOTS` in `script.js` |
 | A reading-rail dot's label | `data-rail="…"` on that `<section>` |
 | Stats, certifications, education | the matching section in `about.html` / `skills.html` |
 | Colours, spacing, radii | `:root` and `[data-theme="light"]` in `style.css` |
@@ -101,6 +103,22 @@ Direction comes from `NAV_ORDER` in `script.js`: a click writes `fwd` or `back` 
 `sessionStorage`, and a small inline script in each page's `<head>` reads it onto
 `<html data-nav-dir>` before the first paint, because by the time `script.js` runs the transition
 has already chosen its animation.
+
+### Profile photo
+
+There is no server to upload to on a static site, so the photo is a file you commit:
+
+1. Open `avatar-tool.html` in a browser. Drop a photo in, frame it inside the circle, download
+   the square `avatar.jpg` it produces. It runs entirely in your browser — nothing is sent anywhere.
+2. Save that file as `assets/avatar.jpg` and push it.
+
+`initAvatar()` probes for `assets/avatar.jpg`, then `.png`, then `.webp`, and applies the first one
+it finds to the nav mark, the recruiter snapshot and the reading-rail avatar. If none exists the
+`ME` monogram stays — so the site is correct either way, and deleting the file reverts it. The probe
+uses an `Image()` rather than an `<img>` so a missing file never flashes a broken icon.
+
+`avatar-tool.html` is a workshop file: it is `noindex`, is not linked from the nav, and can be
+deleted once the photo is in place.
 
 ### Reading rail
 

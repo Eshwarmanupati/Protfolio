@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Avatar Tool — Manupati Eshwar</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='24' fill='%236366F1'/><text x='50' y='71' text-anchor='middle' font-family='Inter,sans-serif' font-weight='800' font-size='58' fill='white'>E</text></svg>" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* Tool-only styles. This page is not part of the portfolio and is not
+       linked from the nav — it exists to produce assets/avatar.jpg. */
+    body { min-height: 100vh; display: grid; place-items: center; padding: 40px 0; }
+    .tool { width: 100%; max-width: 760px; }
+    .tool-head { text-align: center; margin-bottom: 30px; }
+    .tool-head h1 { font-size: clamp(1.7rem, 4vw, 2.4rem); font-weight: 900; letter-spacing: -.03em; }
+    .tool-head p { margin-top: 10px; color: var(--text-2); font-size: .95rem; }
+
+    .drop {
+      padding: 44px 28px; border-radius: var(--r-lg);
+      border: 1.5px dashed var(--border-strong); background: var(--surface);
+      text-align: center; cursor: pointer;
+      transition: border-color .3s var(--ease), background .3s var(--ease), transform .3s var(--ease-out);
+    }
+    .drop:hover, .drop.over { border-color: var(--accent); background: var(--accent-soft); transform: translateY(-2px); }
+    .drop svg { width: 38px; height: 38px; margin: 0 auto 14px; color: var(--accent); }
+    .drop strong { display: block; font-size: 1rem; margin-bottom: 6px; }
+    .drop span { font-size: .85rem; color: var(--text-3); }
+
+    .editor { display: none; gap: 24px; grid-template-columns: 1fr 260px; margin-top: 26px; }
+    .editor.on { display: grid; }
+    .stage {
+      position: relative; aspect-ratio: 1; border-radius: var(--r-lg); overflow: hidden;
+      background: var(--bg-2); border: 1px solid var(--border); cursor: grab;
+      touch-action: none;
+    }
+    .stage:active { cursor: grabbing; }
+    .stage canvas { width: 100%; height: 100%; display: block; }
+    .stage-mask {
+      position: absolute; inset: 0; pointer-events: none;
+      box-shadow: inset 0 0 0 9999px rgba(0,0,0,.52);
+      -webkit-mask: radial-gradient(circle at 50% 50%, transparent 49.5%, #000 50%);
+      mask: radial-gradient(circle at 50% 50%, transparent 49.5%, #000 50%);
+    }
+    .stage-ring { position: absolute; inset: 0; pointer-events: none; border-radius: var(--r-lg); }
+    .stage-ring::after {
+      content: ''; position: absolute; left: 50%; top: 50%; width: 100%; height: 100%;
+      transform: translate(-50%,-50%); border-radius: 50%;
+      border: 1.5px solid rgba(255,255,255,.55);
+    }
+
+    .panel { display: grid; gap: 18px; align-content: start; }
+    .field-row { display: grid; gap: 8px; }
+    .field-row label { font-size: .78rem; letter-spacing: .1em; text-transform: uppercase; color: var(--text-3); }
+    .field-row input[type=range] { width: 100%; accent-color: var(--accent); }
+    .previews { display: flex; align-items: center; gap: 14px; }
+    .pv { border-radius: 50%; overflow: hidden; border: 1px solid var(--border-strong); flex-shrink: 0; }
+    .pv-72 { width: 72px; height: 72px; }
+    .pv-36 { width: 36px; height: 36px; }
+    .pv-24 { width: 24px; height: 24px; }
+    .pv canvas { width: 100%; height: 100%; display: block; }
+    .pv-label { font-size: .72rem; color: var(--text-3); }
+    .steps { margin-top: 30px; padding: 22px 24px; }
+    .steps ol { display: grid; gap: 11px; counter-reset: s; }
+    .steps li { position: relative; padding-left: 30px; counter-increment: s; font-size: .88rem; color: var(--text-2); }
+    .steps li::before {
+      content: counter(s); position: absolute; left: 0; top: 0;
+      width: 21px; height: 21px; border-radius: 50%; display: grid; place-items: center;
+      background: var(--accent-soft); border: 1px solid var(--accent-line); color: var(--accent);
+      font-family: 'JetBrains Mono', monospace; font-size: .68rem; font-weight: 600;
+    }
+    .steps code {
+      font-family: 'JetBrains Mono', monospace; font-size: .82rem;
+      background: var(--code-bg); border: 1px solid var(--border);
+      padding: 2px 7px; border-radius: 6px; color: var(--text);
+    }
+    @media (max-width: 760px) { .editor.on { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <div class="bg-layer" aria-hidden="true"><div class="bg-grid"></div><div class="aurora aurora-1"></div><div class="aurora aurora-2"></div></div>
+
+  <main class="shell tool">
+    <header class="tool-head">
+      <h1>Profile photo tool</h1>
+      <p>
+        Drop a photo, frame it inside the circle, and download a square
+        <code style="font-family:'JetBrains Mono',monospace">avatar.jpg</code>
+        sized for the site. Everything happens in your browser &mdash; nothing is uploaded anywhere.
+      </p>
+    </header>
+
+    <div class="drop card" id="drop" role="button" tabindex="0" aria-label="Choose a photo">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/>
+      </svg>
+      <strong>Drop a photo here, or click to choose one</strong>
+      <span>JPG, PNG or WebP &middot; a head-and-shoulders shot works best</span>
+      <input type="file" id="file" accept="image/*" hidden />
+    </div>
+
+    <div class="editor" id="editor">
+      <div class="stage card" id="stage">
+        <canvas id="stage-canvas" width="720" height="720"></canvas>
+        <div class="stage-mask"></div>
+        <div class="stage-ring"></div>
+      </div>
+
+      <div class="panel">
+        <div class="field-row">
+          <label for="zoom">Zoom</label>
+          <input type="range" id="zoom" min="100" max="320" value="100" />
+        </div>
+
+        <div class="field-row">
+          <label>How it will look</label>
+          <div class="previews">
+            <div class="pv pv-72"><canvas id="pv1" width="144" height="144"></canvas></div>
+            <div class="pv pv-36"><canvas id="pv2" width="72" height="72"></canvas></div>
+            <div class="pv pv-24"><canvas id="pv3" width="48" height="48"></canvas></div>
+          </div>
+          <span class="pv-label">Snapshot &middot; reading rail &middot; nav mark</span>
+        </div>
+
+        <button class="btn btn-primary magnetic" id="download" type="button">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Download avatar.jpg
+        </button>
+        <button class="btn btn-ghost" id="clear" type="button">Choose a different photo</button>
+      </div>
+    </div>
+
+    <div class="card steps">
+      <h3 class="card-heading">Then put it live</h3>
+      <ol>
+        <li>Save the downloaded file into the <code>assets/</code> folder, keeping the name <code>avatar.jpg</code>.</li>
+        <li>Commit and push it: <code>git add assets/avatar.jpg &amp;&amp; git commit -m "add profile photo" &amp;&amp; git push</code></li>
+        <li>That is all &mdash; the site finds the file on its own and uses it in the nav mark, the recruiter snapshot and the reading rail. No HTML to edit.</li>
+        <li>To go back to the <strong>ME</strong> monogram, delete the file and push again.</li>
+      </ol>
+    </div>
+  </main>
+
+<script>
+(function () {
+  const drop = document.getElementById('drop');
+  const file = document.getElementById('file');
+  const editor = document.getElementById('editor');
+  const stage = document.getElementById('stage');
+  const canvas = document.getElementById('stage-canvas');
+  const ctx = canvas.getContext('2d');
+  const zoom = document.getElementById('zoom');
+  const pvs = ['pv1', 'pv2', 'pv3'].map(id => document.getElementById(id));
+
+  let img = null, scale = 1, baseScale = 1, ox = 0, oy = 0;
+  let dragging = false, lastX = 0, lastY = 0;
+
+  const S = canvas.width;      // 720 — the exported size
+
+  function load(f) {
+    if (!f || !f.type.startsWith('image/')) return;
+    const url = URL.createObjectURL(f);
+    const i = new Image();
+    i.onload = () => {
+      img = i;
+      // Start zoomed to cover the square, centred.
+      baseScale = Math.max(S / i.width, S / i.height);
+      scale = 1; zoom.value = 100;
+      ox = 0; oy = 0;
+      editor.classList.add('on');
+      draw();
+      URL.revokeObjectURL(url);
+    };
+    i.src = url;
+  }
+
+  function clampOffsets() {
+    const w = img.width * baseScale * scale;
+    const h = img.height * baseScale * scale;
+    const maxX = Math.max(0, (w - S) / 2);
+    const maxY = Math.max(0, (h - S) / 2);
+    ox = Math.max(-maxX, Math.min(ox, maxX));
+    oy = Math.max(-maxY, Math.min(oy, maxY));
+  }
+
+  function draw() {
+    if (!img) return;
+    clampOffsets();
+    const w = img.width * baseScale * scale;
+    const h = img.height * baseScale * scale;
+    ctx.clearRect(0, 0, S, S);
+    ctx.fillStyle = '#0B0D14';
+    ctx.fillRect(0, 0, S, S);
+    ctx.drawImage(img, (S - w) / 2 + ox, (S - h) / 2 + oy, w, h);
+    pvs.forEach(p => {
+      const c = p.getContext('2d');
+      c.clearRect(0, 0, p.width, p.height);
+      c.drawImage(canvas, 0, 0, p.width, p.height);
+    });
+  }
+
+  // input
+  drop.addEventListener('click', () => file.click());
+  drop.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); file.click(); } });
+  file.addEventListener('change', e => load(e.target.files[0]));
+  ['dragenter', 'dragover'].forEach(t => drop.addEventListener(t, e => { e.preventDefault(); drop.classList.add('over'); }));
+  ['dragleave', 'drop'].forEach(t => drop.addEventListener(t, e => { e.preventDefault(); drop.classList.remove('over'); }));
+  drop.addEventListener('drop', e => load(e.dataTransfer.files[0]));
+
+  zoom.addEventListener('input', () => { scale = zoom.value / 100; draw(); });
+
+  stage.addEventListener('pointerdown', e => {
+    if (!img) return;
+    dragging = true; lastX = e.clientX; lastY = e.clientY;
+    stage.setPointerCapture(e.pointerId);
+  });
+  stage.addEventListener('pointermove', e => {
+    if (!dragging) return;
+    const k = S / stage.clientWidth;   // stage is displayed smaller than the canvas
+    ox += (e.clientX - lastX) * k;
+    oy += (e.clientY - lastY) * k;
+    lastX = e.clientX; lastY = e.clientY;
+    draw();
+  });
+  ['pointerup', 'pointercancel'].forEach(t => stage.addEventListener(t, () => { dragging = false; }));
+
+  document.getElementById('download').addEventListener('click', () => {
+    if (!img) return;
+    canvas.toBlob(blob => {
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'avatar.jpg';
+      a.click();
+      setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+    }, 'image/jpeg', 0.9);
+  });
+
+  document.getElementById('clear').addEventListener('click', () => {
+    img = null; file.value = '';
+    editor.classList.remove('on');
+  });
+})();
+</script>
+</body>
+</html>
