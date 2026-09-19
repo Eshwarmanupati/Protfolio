@@ -1349,15 +1349,16 @@ main.page-enter { animation: pageUp .7s var(--ease-out) both; }
 @media print { .read-rail { display: none !important; } }
 
 /* ═══════════════════════════════════════════
-   34. PAGE TRANSITION — GLITCH & REBUILD
+   34. PAGE TRANSITION — SMOOTH CROSSFADE
    ═══════════════════════════════════════════ */
-/* The outgoing page tears apart, the incoming one snaps back into alignment.
-   Native cross-document transitions do the work; the JS curtain in script.js
-   removes itself when they are available so the two never run together. */
+/* Deliberately only opacity and transform. Those are the two properties the
+   compositor can animate without laying out or repainting, which is what keeps
+   this at frame rate on a full-page snapshot — a blur or an SVG filter here
+   costs a repaint every frame and is what makes a transition feel heavy. */
 @view-transition { navigation: auto; }
 
-/* The frame holds while the content breaks — that contrast is the whole idea,
-   so the chrome is named and persists across documents instead of glitching. */
+/* Named elements persist across documents, so the frame stays put and only the
+   content moves. Nothing to re-render, and it reads as one continuous surface. */
 .nav-wrap   { view-transition-name: site-nav; }
 .footer     { view-transition-name: site-footer; }
 .read-rail  { view-transition-name: read-rail; }
@@ -1366,56 +1367,40 @@ main.page-enter { animation: pageUp .7s var(--ease-out) both; }
 ::view-transition-group(site-nav),
 ::view-transition-group(site-footer),
 ::view-transition-group(read-rail),
-::view-transition-group(to-top) { animation-duration: .3s; }
+::view-transition-group(to-top) { animation-duration: .35s; }
 
-/* steps(1, end) is deliberate: a glitch that eases is not a glitch. Each
-   keyframe holds until the next one lands, which also means the expensive SVG
-   filter is recomputed four times rather than every frame. */
-/* Sequenced, not simultaneous: the old page is almost gone before the new one
-   starts rebuilding, otherwise both glitch at once and it reads as noise. */
-::view-transition-old(root) { animation: glitchTear  .24s steps(1, end) both; }
-::view-transition-new(root) { animation: glitchBuild .34s .14s steps(1, end) both; }
+::view-transition-old(root) { animation: pageOut .34s cubic-bezier(.4, 0, .2, 1) both; }
+::view-transition-new(root) { animation: pageIn  .48s cubic-bezier(.22, 1, .36, 1) both; }
 
-@keyframes glitchTear {
-  0%   { filter: none;              transform: none;                opacity: 1; }
-  22%  { filter: url(#tear-a);      transform: translateX(-7px);    opacity: 1; }
-  45%  { filter: url(#tear-b);      transform: translateX(6px);     opacity: .92; }
-  68%  { filter: url(#tear-c);      transform: translateX(-3px);    opacity: .7; }
-  100% { filter: url(#tear-b);      transform: translateX(2px);     opacity: 0; }
+/* The drift is small on purpose — 18px and half a percent of scale. Enough to
+   give the change a direction, not enough to read as a slide. */
+@keyframes pageOut {
+  from { opacity: 1; transform: none; }
+  to   { opacity: 0; transform: translate3d(-14px, 0, 0) scale(.994); }
 }
 
-@keyframes glitchBuild {
-  0%   { filter: url(#tear-c);      transform: translateX(9px);     opacity: .55; }
-  18%  { filter: url(#tear-a);      transform: translateX(-6px);    opacity: .7; }
-  34%  { filter: url(#tear-b);      transform: translateX(4px);     opacity: .88; }
-  48%  { filter: url(#rgb-split);   transform: translateX(-2px);    opacity: 1; }
-  60%  { filter: none;              transform: none;                opacity: 1; }
-  100% { filter: none;              transform: none;                opacity: 1; }
+/* Opacity finishes at 55% while the drift keeps easing out behind it. If both
+   ran the full duration the two pages would sit half-transparent over each
+   other mid-way and the whole thing would look washed out. */
+@keyframes pageIn {
+  0%   { opacity: 0; transform: translate3d(18px, 0, 0) scale(1.006); }
+  55%  { opacity: 1; }
+  100% { opacity: 1; transform: none; }
 }
 
-/* Travelling back tears the other way. */
-html[data-nav-dir="back"]::view-transition-old(root) { animation-name: glitchTearBack; }
-html[data-nav-dir="back"]::view-transition-new(root) { animation-name: glitchBuildBack; }
+/* Travelling back drifts the other way. */
+html[data-nav-dir="back"]::view-transition-old(root) { animation-name: pageOutBack; }
+html[data-nav-dir="back"]::view-transition-new(root) { animation-name: pageInBack; }
 
-@keyframes glitchTearBack {
-  0%   { filter: none;              transform: none;                opacity: 1; }
-  22%  { filter: url(#tear-b);      transform: translateX(7px);     opacity: 1; }
-  45%  { filter: url(#tear-a);      transform: translateX(-6px);    opacity: .92; }
-  68%  { filter: url(#tear-c);      transform: translateX(3px);     opacity: .7; }
-  100% { filter: url(#tear-a);      transform: translateX(-2px);    opacity: 0; }
+@keyframes pageOutBack {
+  from { opacity: 1; transform: none; }
+  to   { opacity: 0; transform: translate3d(14px, 0, 0) scale(.994); }
 }
-
-@keyframes glitchBuildBack {
-  0%   { filter: url(#tear-a);      transform: translateX(-9px);    opacity: .55; }
-  18%  { filter: url(#tear-c);      transform: translateX(6px);     opacity: .7; }
-  34%  { filter: url(#tear-b);      transform: translateX(-4px);    opacity: .88; }
-  48%  { filter: url(#rgb-split);   transform: translateX(2px);     opacity: 1; }
-  60%  { filter: none;              transform: none;                opacity: 1; }
-  100% { filter: none;              transform: none;                opacity: 1; }
+@keyframes pageInBack {
+  0%   { opacity: 0; transform: translate3d(-18px, 0, 0) scale(1.006); }
+  55%  { opacity: 1; }
+  100% { opacity: 1; transform: none; }
 }
-
-/* The filter defs live in the markup and must never take up layout space. */
-.glitch-defs { position: absolute; width: 0; height: 0; overflow: hidden; pointer-events: none; }
 
 @media (prefers-reduced-motion: reduce) {
   ::view-transition-group(*),
